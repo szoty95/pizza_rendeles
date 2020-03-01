@@ -2,6 +2,7 @@ package com.onlab.pizza;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Archive {
@@ -28,6 +29,9 @@ public class Archive {
         this.orderDate = orderDate;
         this.customerID = customerID;
     }
+
+    @OneToOne
+    private DailyOrder dailyOrder;
 
     public int getOrderID() {
         return orderID;

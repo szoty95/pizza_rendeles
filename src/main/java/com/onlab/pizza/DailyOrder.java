@@ -1,9 +1,7 @@
 package com.onlab.pizza;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 public class DailyOrder{
@@ -18,6 +16,15 @@ public class DailyOrder{
     private int price;
     private String orderDate;
     private int customerID;
+
+    @OneToOne
+    private Archive archive;
+
+    @ManyToOne
+    private PersonalDetails personalDetails;
+
+    @OneToMany
+    private Collection<Pizza> pizzas;
 
     public int getOrderID() {
         return orderID;

@@ -2,6 +2,7 @@ package com.onlab.pizza;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Sauce{
@@ -22,6 +23,9 @@ public class Sauce{
         this.isSpicy = spicyness;
         this.color = color;
     }
+
+    @OneToOne
+    private Pizza pizza;
 
     public String getSauceName(){
         return sauceName;

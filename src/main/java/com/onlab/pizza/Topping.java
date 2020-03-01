@@ -2,6 +2,7 @@ package com.onlab.pizza;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Topping {
@@ -18,6 +19,9 @@ public class Topping {
         category = type;
         isSpicy = isHot;
     }
+
+    @ManyToOne
+    private Pizza pizza;
 
     public String getToppingName() {
         return toppingName;

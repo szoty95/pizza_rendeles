@@ -1,9 +1,7 @@
 package com.onlab.pizza;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 public class PersonalDetails {
@@ -23,8 +21,10 @@ public class PersonalDetails {
         this.address = address;
         this.phoneNumber = phone;
         this.emailAddress = email;
-
     }
+
+    @OneToMany
+    private Collection<DailyOrder> dailyOrders;
 
     public int getUserID() {
         return userID;
