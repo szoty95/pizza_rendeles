@@ -5,10 +5,17 @@ import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
+//TODO: el kell dönteni, hgy a Pizza entitásból egy példány, az egy konkrét bedobozolt pizza példányt reprezentál-e,
+//vagy egy pizza típust. Ha pizza példányt, akkor nem jó a név id-nek. (Nem nevezik el a pizza példányokat)
+//Ha pizza típus, akkor meg a nem jó a @ManyToOne dailyOrder, mert egy pizza típus nemcsak egy rendelésben szerepelhet.
+//Hasonlóan a Topping és Sauce-nál is keveredik ez: szósz/feltét példány, vagy feltét típus?
+//Lehet, hogy szükség van mindkettőre (típus, példány), attól függ, mit akarsz modellezni.
 public class Pizza {
 
     @Id
     private String pizzaName;
+
+    //TODO ha a sauce és toppings mint kapcsolat már jelen van, ezek az attribútumok nem kellenek
     private String baseSauce;
     private String firstTopping;
     private String secondTopping;

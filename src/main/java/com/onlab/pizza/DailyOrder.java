@@ -9,12 +9,16 @@ public class DailyOrder{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int orderID;
+    
+    //TODO Ha egy rendelésben több pizza van, akkor ezeknek inkább a Pizza entitásban lenne a helye, nem?
     private String pizzaName;
     private int size; //diameter size in cm
     private boolean isThick; //pasta thickness
     private String extraTopping;
     private int price;
     private String orderDate;
+    
+    //TODO Ha a personalDetails reprezentálja a rendelő usert, akkor a customerID külön oszlopként már felesleges
     private int customerID;
 
     @OneToOne

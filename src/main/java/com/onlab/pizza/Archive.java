@@ -1,9 +1,15 @@
+//TODO: az entitásokat egy com.onlab.pizza.model package-be tedd majd át
 package com.onlab.pizza;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+//TODO Át kellene gondolni, pontosan mit akarsz az Archive entitással.
+/*Ha az a cél, hogy kb. ugyanazok az adatok legyenek benne, mint a DailyOrder-ben,
+akkor célszerű egy új embedded osztályt bevezetni. (pl. OrderData), és akkor az Archive meg a DailyOrder is
+egy OrderData-t tartalmazna, így elkerülve a redundanciát
+*/ 
 @Entity
 public class Archive {
 
