@@ -2,7 +2,9 @@ package com.onlab.pizza;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import java.util.Collection;
 
 @Entity
 public class Topping {
@@ -22,6 +24,10 @@ public class Topping {
 
     @ManyToOne
     private Pizza pizza;
+
+    @ManyToMany
+    private Collection<BoxedPizza> boxedPizzas;
+
 
     public String getToppingName() {
         return toppingName;
@@ -45,5 +51,21 @@ public class Topping {
 
     public void setSpicy(boolean spicy) {
         isSpicy = spicy;
+    }
+
+    public Pizza getPizza() {
+        return pizza;
+    }
+
+    public void setPizza(Pizza pizza) {
+        this.pizza = pizza;
+    }
+
+    public Collection<BoxedPizza> getBoxedPizzas() {
+        return boxedPizzas;
+    }
+
+    public void setBoxedPizzas(Collection<BoxedPizza> boxedPizzas) {
+        this.boxedPizzas = boxedPizzas;
     }
 }

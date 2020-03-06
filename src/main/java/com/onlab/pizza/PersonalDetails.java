@@ -24,7 +24,7 @@ public class PersonalDetails {
     }
 
     @OneToMany
-    private Collection<DailyOrder> dailyOrders;
+    private Collection<Order> orders;
 
     public int getUserID() {
         return userID;
