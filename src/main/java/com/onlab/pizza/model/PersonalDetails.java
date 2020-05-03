@@ -1,4 +1,4 @@
-package com.onlab.pizza;
+package com.onlab.pizza.model;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -7,7 +7,7 @@ import java.util.Collection;
 public class PersonalDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userID;
     private String personalName;
     private String address;
@@ -60,5 +60,11 @@ public class PersonalDetails {
 
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
+    }
+
+    public Collection<Order> getOrders() {return orders;}
+
+    public void setOrders(Collection<Order> orders){
+        this.orders=orders;
     }
 }

@@ -1,4 +1,4 @@
-package com.onlab.pizza;
+package com.onlab.pizza.model;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -7,7 +7,7 @@ import java.util.Collection;
 public class BoxedPizza {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int pizzaID;
     private int size; //diameter size in cm
     private boolean isThick; //pasta thickness

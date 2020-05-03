@@ -1,4 +1,4 @@
-package com.onlab.pizza;
+package com.onlab.pizza.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
