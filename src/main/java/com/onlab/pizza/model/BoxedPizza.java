@@ -1,9 +1,9 @@
 package com.onlab.pizza.model;
 
 import javax.persistence.*;
-import java.util.Collection;
 
 @Entity
+@Table(name = "BoxedPizzas")
 public class BoxedPizza {
 
     @Id
@@ -23,15 +23,6 @@ public class BoxedPizza {
 
     @ManyToOne
     private Pizza pizza;
-
-    @ManyToOne
-    private Sauce sauce;
-
-    @ManyToOne
-    private Order order;
-
-    @ManyToMany
-    private Collection<Topping> toppings;
 
     public int getPizzaID() {
         return pizzaID;
@@ -67,27 +58,4 @@ public class BoxedPizza {
         this.pizza = pizza;
     }
 
-    public Sauce getSauce() {
-        return sauce;
-    }
-
-    public void setSauce(Sauce sauce) {
-        this.sauce = sauce;
-    }
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-
-    public Collection<Topping> getToppings() {
-        return toppings;
-    }
-
-    public void setToppings(Collection<Topping> toppings) {
-        this.toppings = toppings;
-    }
 }

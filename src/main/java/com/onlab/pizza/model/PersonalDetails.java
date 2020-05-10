@@ -1,9 +1,9 @@
 package com.onlab.pizza.model;
 
 import javax.persistence.*;
-import java.util.Collection;
 
 @Entity
+@Table(name = "personal_details")
 public class PersonalDetails {
 
     @Id
@@ -22,9 +22,6 @@ public class PersonalDetails {
         this.phoneNumber = phone;
         this.emailAddress = email;
     }
-
-    @OneToMany
-    private Collection<Order> orders;
 
     public int getUserID() {
         return userID;
@@ -60,11 +57,5 @@ public class PersonalDetails {
 
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
-    }
-
-    public Collection<Order> getOrders() {return orders;}
-
-    public void setOrders(Collection<Order> orders){
-        this.orders=orders;
     }
 }

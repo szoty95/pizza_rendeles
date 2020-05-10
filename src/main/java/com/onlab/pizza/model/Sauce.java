@@ -1,12 +1,9 @@
 package com.onlab.pizza.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import java.util.Collection;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "sauces")
 public class Sauce{
 
     @Id
@@ -25,14 +22,6 @@ public class Sauce{
         this.isSpicy = spicyness;
         this.color = color;
     }
-
-    @OneToOne
-    private Pizza pizza;
-
-    @OneToMany
-    private Collection<BoxedPizza> boxedPizzas;
-
-
     public String getSauceName(){
         return sauceName;
     }
@@ -55,21 +44,5 @@ public class Sauce{
 
     public void setColor(String value){
         this.color = value;
-    }
-
-    public Pizza getPizza() {
-        return pizza;
-    }
-
-    public void setPizza(Pizza pizza) {
-        this.pizza = pizza;
-    }
-
-    public Collection<BoxedPizza> getBoxedPizzas() {
-        return boxedPizzas;
-    }
-
-    public void setBoxedPizzas(Collection<BoxedPizza> boxedPizzas) {
-        this.boxedPizzas = boxedPizzas;
     }
 }

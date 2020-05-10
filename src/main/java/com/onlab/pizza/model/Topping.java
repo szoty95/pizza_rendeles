@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
+@Table(name = "toppings")
 public class Topping {
 
     @Id
@@ -18,13 +19,6 @@ public class Topping {
         category = type;
         isSpicy = isHot;
     }
-
-    @ManyToOne
-    private Pizza pizza;
-
-    @ManyToMany
-    private Collection<BoxedPizza> boxedPizzas;
-
 
     public String getToppingName() {
         return toppingName;
@@ -48,21 +42,5 @@ public class Topping {
 
     public void setSpicy(boolean spicy) {
         isSpicy = spicy;
-    }
-
-    public Pizza getPizza() {
-        return pizza;
-    }
-
-    public void setPizza(Pizza pizza) {
-        this.pizza = pizza;
-    }
-
-    public Collection<BoxedPizza> getBoxedPizzas() {
-        return boxedPizzas;
-    }
-
-    public void setBoxedPizzas(Collection<BoxedPizza> boxedPizzas) {
-        this.boxedPizzas = boxedPizzas;
     }
 }

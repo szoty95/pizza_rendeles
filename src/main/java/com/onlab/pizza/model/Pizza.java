@@ -5,7 +5,7 @@ import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-
+@Table(name = "pizzas")
 public class Pizza {
 
     @Id
@@ -21,9 +21,6 @@ public class Pizza {
 
     @OneToOne
     private Sauce sauce;
-
-    @OneToMany
-    private Collection<BoxedPizza> boxedPizzas;
 
     @OneToMany
     private Collection<Topping> toppings;
@@ -48,14 +45,6 @@ public class Pizza {
 
     public void setSauce(Sauce sauce) {
         this.sauce = sauce;
-    }
-
-    public Collection<BoxedPizza> getBoxedPizzas() {
-        return boxedPizzas;
-    }
-
-    public void setBoxedPizzas(Collection<BoxedPizza> boxedPizzas) {
-        this.boxedPizzas = boxedPizzas;
     }
 
     public Collection<Topping> getToppings() {

@@ -29,3 +29,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Angular ###
+/pizza-rendeles-client/node_modules/

@@ -1,0 +1,776 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "REST API SPEC FOR MIX WEBAPP",
+    "version" : "v1",
+    "title" : "REST API SPEC FOR MIX WEBAPP"
+  },
+  "tags" : [ {
+    "name" : "BoxedPizza"
+  }, {
+    "name" : "Order"
+  }, {
+    "name" : "PersonalDetails"
+  }, {
+    "name" : "Pizza"
+  }, {
+    "name" : "Sauce"
+  }, {
+    "name" : "Topping"
+  } ],
+  "paths" : {
+    "/api/boxedPizza/pizzas/{pizzaID}/boxedpizzas" : {
+      "get" : {
+        "tags" : [ "BoxedPizza" ],
+        "summary" : "Get boxed pizzas",
+        "description" : "",
+        "operationId" : "getBoxedPizzas",
+        "parameters" : [ {
+          "name" : "",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/BoxedPizza"
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "BoxedPizza" ],
+        "summary" : "Add boxed pizza",
+        "description" : "",
+        "operationId" : "addBoxedPizza",
+        "parameters" : [ {
+          "name" : "",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/BoxedPizza"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/BoxedPizza"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "BoxedPizza" ],
+        "summary" : "Delete boxed pizza",
+        "description" : "",
+        "operationId" : "deleteBoxedPizza",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "object"
+            }
+          }
+        }
+      }
+    },
+    "/api/boxedPizza/pizzas/{pizzaID}/boxedpizzas/{boxID}" : {
+      "put" : {
+        "tags" : [ "BoxedPizza" ],
+        "summary" : "Update boxed pizza",
+        "description" : "",
+        "operationId" : "updateBoxedPizza",
+        "parameters" : [ {
+          "name" : "",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/BoxedPizza"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/BoxedPizza"
+            }
+          }
+        }
+      }
+    },
+    "/api/order/people/{personID}/orders" : {
+      "get" : {
+        "tags" : [ "Order" ],
+        "summary" : "Get orders",
+        "description" : "",
+        "operationId" : "getOrders",
+        "parameters" : [ {
+          "name" : "",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Order"
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Order" ],
+        "summary" : "Add new order",
+        "description" : "",
+        "operationId" : "addOrder",
+        "parameters" : [ {
+          "name" : "",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Order"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Order"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Order" ],
+        "summary" : "Delete order",
+        "description" : "",
+        "operationId" : "deleteOrders",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "object"
+            }
+          }
+        }
+      }
+    },
+    "/api/order/people/{personID}/orders/{orderID}" : {
+      "put" : {
+        "tags" : [ "Order" ],
+        "summary" : "Update order",
+        "description" : "",
+        "operationId" : "updateOrder",
+        "parameters" : [ {
+          "name" : "",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Order"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Order"
+            }
+          }
+        }
+      }
+    },
+    "/api/personalDetails/people" : {
+      "get" : {
+        "tags" : [ "PersonalDetails" ],
+        "summary" : "Get all personal details",
+        "description" : "",
+        "operationId" : "getPersonalDetails",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/PersonalDetails"
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "PersonalDetails" ],
+        "summary" : "Add new personal details",
+        "description" : "",
+        "operationId" : "addPersonalDetails",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/PersonalDetails"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/PersonalDetails"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "PersonalDetails" ],
+        "summary" : "Delete personal details",
+        "description" : "",
+        "operationId" : "deletePersonalDetails",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "object"
+            }
+          }
+        }
+      }
+    },
+    "/api/personalDetails/people/{personID}" : {
+      "put" : {
+        "tags" : [ "PersonalDetails" ],
+        "summary" : "Update personal details",
+        "description" : "",
+        "operationId" : "updatePersonalDetails",
+        "parameters" : [ {
+          "name" : "",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/PersonalDetails"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/PersonalDetails"
+            }
+          }
+        }
+      }
+    },
+    "/api/pizza/pizzas" : {
+      "get" : {
+        "tags" : [ "Pizza" ],
+        "summary" : "Get Pizza types",
+        "description" : "",
+        "operationId" : "getPizzaTypes",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Pizza"
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Pizza" ],
+        "summary" : "Add Pizza Type",
+        "description" : "",
+        "operationId" : "addPizza",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Pizza"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Pizza"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Pizza" ],
+        "summary" : "Delete pizza",
+        "description" : "",
+        "operationId" : "deletePizza",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "object"
+            }
+          }
+        }
+      }
+    },
+    "/api/pizza/pizzas/{pizzaID}" : {
+      "put" : {
+        "tags" : [ "Pizza" ],
+        "summary" : "Update Type",
+        "description" : "",
+        "operationId" : "updatePizza",
+        "parameters" : [ {
+          "name" : "",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Pizza"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Pizza"
+            }
+          }
+        }
+      }
+    },
+    "/api/sauce/pizzas/{pizzaID}/sauces" : {
+      "delete" : {
+        "tags" : [ "Sauce" ],
+        "summary" : "Get sauces",
+        "description" : "",
+        "operationId" : "deleteSauces",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "object"
+            }
+          }
+        }
+      }
+    },
+    "/api/sauce/sauces" : {
+      "get" : {
+        "tags" : [ "Sauce" ],
+        "summary" : "Get sauces",
+        "description" : "",
+        "operationId" : "getSauces",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Sauce"
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Sauce" ],
+        "summary" : "Add new sauce",
+        "description" : "",
+        "operationId" : "addSauces",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Sauce"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Sauce"
+            }
+          }
+        }
+      }
+    },
+    "/api/sauce/sauces/{sauceID}" : {
+      "put" : {
+        "tags" : [ "Sauce" ],
+        "summary" : "Update sauce",
+        "description" : "",
+        "operationId" : "updateSauces",
+        "parameters" : [ {
+          "name" : "",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Sauce"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Sauce"
+            }
+          }
+        }
+      }
+    },
+    "/api/topping/pizzas/{pizzaID}/toppings" : {
+      "get" : {
+        "tags" : [ "Topping" ],
+        "summary" : "Get all toppings",
+        "description" : "",
+        "operationId" : "getToppings",
+        "parameters" : [ {
+          "name" : "",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Topping"
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Topping" ],
+        "summary" : "Add new topping",
+        "description" : "",
+        "operationId" : "addTopping",
+        "parameters" : [ {
+          "name" : "",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Topping"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Topping"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Topping" ],
+        "summary" : "Delete topping",
+        "description" : "",
+        "operationId" : "deleteTopping",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "object"
+            }
+          }
+        }
+      }
+    },
+    "/api/topping/pizzas/{pizzaID}/toppings/{toppingID}" : {
+      "put" : {
+        "tags" : [ "Topping" ],
+        "summary" : "Update topping",
+        "description" : "",
+        "operationId" : "updateTopping",
+        "parameters" : [ {
+          "name" : "",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Topping"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Topping"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "BoxedPizza" : {
+      "type" : "object",
+      "properties" : {
+        "pizzaID" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "size" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "price" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "pizza" : {
+          "$ref" : "#/definitions/Pizza"
+        },
+        "thick" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "Order" : {
+      "type" : "object",
+      "properties" : {
+        "orderID" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "orderPrice" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "quantity" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "orderDate" : {
+          "type" : "string"
+        },
+        "personalDetails" : {
+          "$ref" : "#/definitions/PersonalDetails"
+        },
+        "boxedPizzas" : {
+          "type" : "array",
+          "uniqueItems" : true,
+          "items" : {
+            "$ref" : "#/definitions/BoxedPizza"
+          }
+        }
+      }
+    },
+    "PersonalDetails" : {
+      "type" : "object",
+      "properties" : {
+        "userID" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "personalName" : {
+          "type" : "string"
+        },
+        "address" : {
+          "type" : "string"
+        },
+        "phoneNumber" : {
+          "type" : "string"
+        },
+        "emailAddress" : {
+          "type" : "string"
+        }
+      }
+    },
+    "Pizza" : {
+      "type" : "object",
+      "properties" : {
+        "pizzaName" : {
+          "type" : "string"
+        },
+        "sauce" : {
+          "$ref" : "#/definitions/Sauce"
+        },
+        "toppings" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Topping"
+          }
+        },
+        "spicy" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "Sauce" : {
+      "type" : "object",
+      "properties" : {
+        "sauceName" : {
+          "type" : "string"
+        },
+        "color" : {
+          "type" : "string"
+        },
+        "spicy" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "Topping" : {
+      "type" : "object",
+      "properties" : {
+        "toppingName" : {
+          "type" : "string"
+        },
+        "category" : {
+          "type" : "string"
+        },
+        "isSpicy" : {
+          "type" : "boolean"
+        }
+      }
+    }
+  }
+}

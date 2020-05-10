@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface BoxedPizzaRepository extends JpaRepository<BoxedPizza, Integer> {
-    List<BoxedPizza> findByPizzaType(Integer pizzaID);
+    List<BoxedPizza> findByPizza(Integer pizzaID);
 }

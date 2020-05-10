@@ -1,9 +1,10 @@
 package com.onlab.pizza.model;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.Set;
 
 @Entity
+@Table(name = "orders")
 public class Order {
 
     @Id
@@ -11,6 +12,7 @@ public class Order {
     private int orderID;
 
     private int orderPrice;
+    private int quantity;
     private String orderDate;
 
     public Order(){}
@@ -24,7 +26,7 @@ public class Order {
     private PersonalDetails personalDetails;
 
     @OneToMany
-    private Collection<BoxedPizza> boxedPizzas;
+    private Set<BoxedPizza> boxedPizzas;
 
     public int getOrderID() {
         return orderID;
@@ -54,11 +56,17 @@ public class Order {
         this.personalDetails = personalDetails;
     }
 
-    public Collection<BoxedPizza> getBoxedPizzas() {
+    public Set<BoxedPizza> getBoxedPizzas() {
         return boxedPizzas;
     }
 
-    public void setBoxedPizzas(Collection<BoxedPizza> boxedPizzas) {
+    public void setBoxedPizzas(Set<BoxedPizza> boxedPizzas) {
         this.boxedPizzas = boxedPizzas;
     }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+     public void setQuantity(int quantity){ this.quantity = quantity; }
 }
