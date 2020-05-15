@@ -8,9 +8,16 @@ public class BoxedPizza {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Id")
     private int pizzaID;
+
+    @Column(name = "Size")
     private int size; //diameter size in cm
+
+    @Column(name = "Thick")
     private boolean isThick; //pasta thickness
+
+    @Column(name = "Price")
     private int price;
 
     public BoxedPizza(){}

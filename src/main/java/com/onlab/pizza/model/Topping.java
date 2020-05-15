@@ -1,15 +1,22 @@
 package com.onlab.pizza.model;
 
-import javax.persistence.*;
-import java.util.Collection;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "toppings")
 public class Topping {
 
     @Id
+    @Column(name = "Name")
     private String toppingName;
+
+    @Column(name = "Category")
     private String category;  //meat or vegetable or else
+
+    @Column(name = "Spicy")
     private boolean isSpicy;
 
     public Topping(){}

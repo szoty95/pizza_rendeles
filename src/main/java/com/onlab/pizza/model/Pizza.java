@@ -9,7 +9,10 @@ import java.util.Collection;
 public class Pizza {
 
     @Id
+    @Column(name = "Name")
     private String pizzaName;
+
+    @Column(name = "Spicy")
     private boolean isSpicy;
 
     public Pizza(){}

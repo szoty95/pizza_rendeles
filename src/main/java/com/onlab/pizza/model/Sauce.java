@@ -7,8 +7,13 @@ import javax.persistence.*;
 public class Sauce{
 
     @Id
+    @Column(name = "Name")
     private String sauceName;
+
+    @Column(name = "Spicy")
     private boolean isSpicy;
+
+    @Column(name = "Color")
     private String color;
 
     public Sauce(){

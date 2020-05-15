@@ -8,10 +8,19 @@ public class PersonalDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Id")
     private int userID;
+
+    @Column(name = "Name")
     private String personalName;
+
+    @Column(name = "Address")
     private String address;
+
+    @Column(name = "Phone")
     private String phoneNumber;
+
+    @Column(name = "Email")
     private String emailAddress;
 
     public PersonalDetails(){}

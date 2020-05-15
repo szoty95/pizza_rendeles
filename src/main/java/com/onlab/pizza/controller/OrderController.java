@@ -50,7 +50,6 @@ public class OrderController {
         return orderRepository.findById(orderID).map(order -> {
             order.setOrderPrice(orderRequest.getOrderPrice());
             order.setOrderDate(orderRequest.getOrderDate());
-            order.setQuantity(orderRequest.getQuantity());
 
             return orderRepository.save(order);
         }).orElseThrow(() -> new NotFoundException("Order is not found with provided ID " + orderID));

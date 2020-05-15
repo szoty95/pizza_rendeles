@@ -9,10 +9,13 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Id")
     private int orderID;
 
+    @Column(name = "Price")
     private int orderPrice;
-    private int quantity;
+
+    @Column(name = "Date")
     private String orderDate;
 
     public Order(){}
@@ -63,10 +66,4 @@ public class Order {
     public void setBoxedPizzas(Set<BoxedPizza> boxedPizzas) {
         this.boxedPizzas = boxedPizzas;
     }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-     public void setQuantity(int quantity){ this.quantity = quantity; }
 }
