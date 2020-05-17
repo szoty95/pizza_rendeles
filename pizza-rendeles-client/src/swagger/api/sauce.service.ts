@@ -19,6 +19,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { Sauce } from '../model/sauce';
+import { SauceWrapper } from '../model/sauceWrapper';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -101,15 +102,23 @@ export class SauceService {
     /**
      * Get sauces
      * 
-     * @param body 
+     * @param sauceID 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteSauces(body?: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public deleteSauces(body?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public deleteSauces(body?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public deleteSauces(body?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public deleteSauces(sauceID: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public deleteSauces(sauceID: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public deleteSauces(sauceID: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public deleteSauces(sauceID: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
+        if (sauceID === null || sauceID === undefined) {
+            throw new Error('Required parameter sauceID was null or undefined when calling deleteSauces.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (sauceID !== undefined && sauceID !== null) {
+            queryParameters = queryParameters.set('sauceID', <any>sauceID);
+        }
 
         let headers = this.defaultHeaders;
 
@@ -124,13 +133,10 @@ export class SauceService {
         // to determine the Content-Type header
         const consumes: string[] = [
         ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
 
-        return this.httpClient.delete<any>(`${this.basePath}/api/sauce/pizzas/${encodeURIComponent(String(pizzaID))}/sauces`,
+        return this.httpClient.delete<any>(`${this.basePath}/api/sauce/sauces`,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -145,9 +151,9 @@ export class SauceService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getSauces(observe?: 'body', reportProgress?: boolean): Observable<Sauce>;
-    public getSauces(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Sauce>>;
-    public getSauces(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Sauce>>;
+    public getSauces(observe?: 'body', reportProgress?: boolean): Observable<SauceWrapper>;
+    public getSauces(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<SauceWrapper>>;
+    public getSauces(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<SauceWrapper>>;
     public getSauces(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let headers = this.defaultHeaders;
@@ -164,7 +170,7 @@ export class SauceService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<Sauce>(`${this.basePath}/api/sauce/sauces`,
+        return this.httpClient.get<SauceWrapper>(`${this.basePath}/api/sauce/sauces`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -177,20 +183,25 @@ export class SauceService {
     /**
      * Update sauce
      * 
-     * @param  
+     * @param sauceID 
      * @param body 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateSauces(: number, body?: Sauce, observe?: 'body', reportProgress?: boolean): Observable<Sauce>;
-    public updateSauces(: number, body?: Sauce, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Sauce>>;
-    public updateSauces(: number, body?: Sauce, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Sauce>>;
-    public updateSauces(: number, body?: Sauce, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public updateSauces(sauceID: number, body?: Sauce, observe?: 'body', reportProgress?: boolean): Observable<Sauce>;
+    public updateSauces(sauceID: number, body?: Sauce, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Sauce>>;
+    public updateSauces(sauceID: number, body?: Sauce, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Sauce>>;
+    public updateSauces(sauceID: number, body?: Sauce, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if ( === null ||  === undefined) {
-            throw new Error('Required parameter  was null or undefined when calling updateSauces.');
+        if (sauceID === null || sauceID === undefined) {
+            throw new Error('Required parameter sauceID was null or undefined when calling updateSauces.');
         }
 
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (sauceID !== undefined && sauceID !== null) {
+            queryParameters = queryParameters.set('sauceID', <any>sauceID);
+        }
 
         let headers = this.defaultHeaders;
 
@@ -213,6 +224,7 @@ export class SauceService {
         return this.httpClient.put<Sauce>(`${this.basePath}/api/sauce/sauces/${encodeURIComponent(String(sauceID))}`,
             body,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

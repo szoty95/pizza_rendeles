@@ -25,7 +25,8 @@ public class Pizza {
     @OneToOne
     private Sauce sauce;
 
-    @OneToMany
+    @ManyToMany
+    @JoinColumn(name = "Name")
     private Collection<Topping> toppings;
 
     public String getPizzaName() {

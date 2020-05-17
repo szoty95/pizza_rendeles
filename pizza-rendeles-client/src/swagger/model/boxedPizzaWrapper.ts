@@ -10,13 +10,8 @@
  * Do not edit the class manually.
  */
 import { BoxedPizza } from './boxedPizza';
-import { PersonalDetails } from './personalDetails';
 
 
-export interface Order { 
-    orderID?: number;
-    orderPrice?: number;
-    orderDate?: string;
-    personalDetails?: PersonalDetails;
+export interface BoxedPizzaWrapper { 
     boxedPizzas?: Array<BoxedPizza>;
 }

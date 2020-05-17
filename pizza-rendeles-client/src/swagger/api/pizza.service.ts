@@ -19,6 +19,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { Pizza } from '../model/pizza';
+import { PizzaWrapper } from '../model/pizzaWrapper';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -101,15 +102,23 @@ export class PizzaService {
     /**
      * Delete pizza
      * 
-     * @param body 
+     * @param pizzaID 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deletePizza(body?: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public deletePizza(body?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public deletePizza(body?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public deletePizza(body?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public deletePizza(pizzaID: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public deletePizza(pizzaID: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public deletePizza(pizzaID: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public deletePizza(pizzaID: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
+        if (pizzaID === null || pizzaID === undefined) {
+            throw new Error('Required parameter pizzaID was null or undefined when calling deletePizza.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (pizzaID !== undefined && pizzaID !== null) {
+            queryParameters = queryParameters.set('pizzaID', <any>pizzaID);
+        }
 
         let headers = this.defaultHeaders;
 
@@ -124,13 +133,10 @@ export class PizzaService {
         // to determine the Content-Type header
         const consumes: string[] = [
         ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
 
         return this.httpClient.delete<any>(`${this.basePath}/api/pizza/pizzas`,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -145,9 +151,9 @@ export class PizzaService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getPizzaTypes(observe?: 'body', reportProgress?: boolean): Observable<Pizza>;
-    public getPizzaTypes(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Pizza>>;
-    public getPizzaTypes(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Pizza>>;
+    public getPizzaTypes(observe?: 'body', reportProgress?: boolean): Observable<PizzaWrapper>;
+    public getPizzaTypes(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PizzaWrapper>>;
+    public getPizzaTypes(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PizzaWrapper>>;
     public getPizzaTypes(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let headers = this.defaultHeaders;
@@ -164,7 +170,7 @@ export class PizzaService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<Pizza>(`${this.basePath}/api/pizza/pizzas`,
+        return this.httpClient.get<PizzaWrapper>(`${this.basePath}/api/pizza/pizzas`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -177,20 +183,25 @@ export class PizzaService {
     /**
      * Update Type
      * 
-     * @param  
+     * @param pizzaID 
      * @param body 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updatePizza(: number, body?: Pizza, observe?: 'body', reportProgress?: boolean): Observable<Pizza>;
-    public updatePizza(: number, body?: Pizza, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Pizza>>;
-    public updatePizza(: number, body?: Pizza, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Pizza>>;
-    public updatePizza(: number, body?: Pizza, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public updatePizza(pizzaID: number, body?: Pizza, observe?: 'body', reportProgress?: boolean): Observable<Pizza>;
+    public updatePizza(pizzaID: number, body?: Pizza, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Pizza>>;
+    public updatePizza(pizzaID: number, body?: Pizza, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Pizza>>;
+    public updatePizza(pizzaID: number, body?: Pizza, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if ( === null ||  === undefined) {
-            throw new Error('Required parameter  was null or undefined when calling updatePizza.');
+        if (pizzaID === null || pizzaID === undefined) {
+            throw new Error('Required parameter pizzaID was null or undefined when calling updatePizza.');
         }
 
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (pizzaID !== undefined && pizzaID !== null) {
+            queryParameters = queryParameters.set('pizzaID', <any>pizzaID);
+        }
 
         let headers = this.defaultHeaders;
 
@@ -213,6 +224,7 @@ export class PizzaService {
         return this.httpClient.put<Pizza>(`${this.basePath}/api/pizza/pizzas/${encodeURIComponent(String(pizzaID))}`,
             body,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

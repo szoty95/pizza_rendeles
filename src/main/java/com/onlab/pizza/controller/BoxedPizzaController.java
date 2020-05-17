@@ -4,6 +4,7 @@ import com.onlab.pizza.exception.NotFoundException;
 import com.onlab.pizza.model.BoxedPizza;
 import com.onlab.pizza.repository.BoxedPizzaRepository;
 import com.onlab.pizza.repository.PizzaRepository;
+import com.onlab.pizza.wrapper.BoxedPizzaWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,14 +27,14 @@ public class BoxedPizzaController {
     private PizzaRepository pizzaRepository;
 
     @GetMapping("pizzas/{pizzaID}/boxedpizzas")
-    @ApiOperation(value = "Get boxed pizzas", response = BoxedPizza.class, nickname = "getBoxedPizzas")
-    public List<BoxedPizza> getBoxedPizzaByPizzaType(@PathVariable Integer pizzaID){
+    @ApiOperation(value = "Get boxed pizzas", response = BoxedPizzaWrapper.class, nickname = "getBoxedPizzas")
+    public List<BoxedPizza> getBoxedPizzaByPizzaType(@RequestParam(value = "pizzaID", required = true) Integer pizzaID){
         return boxedPizzaRepository.findByPizza(pizzaID);
     }
 
     @PostMapping("pizzas/{pizzaID}/boxedpizzas")
     @ApiOperation(value = "Add boxed pizza", response = BoxedPizza.class, nickname = "addBoxedPizza")
-    public BoxedPizza addBox(@PathVariable Integer pizzaID, @Valid @RequestBody BoxedPizza boxedPizza){
+    public BoxedPizza addBox(@RequestParam(value = "pizzaID", required = true) Integer pizzaID, @Valid @RequestBody BoxedPizza boxedPizza){
         return pizzaRepository.findById(pizzaID).map(pizza -> {
             boxedPizza.setPizza(pizza);
             return boxedPizzaRepository.save(boxedPizza);
@@ -42,7 +43,7 @@ public class BoxedPizzaController {
 
     @PutMapping("pizzas/{pizzaID}/boxedpizzas/{boxID}")
     @ApiOperation(value = "Update boxed pizza", response = BoxedPizza.class, nickname = "updateBoxedPizza")
-    public BoxedPizza updateBox(@PathVariable Integer pizzaID, @PathVariable Integer boxID, @Valid @RequestBody BoxedPizza boxRequest){
+    public BoxedPizza updateBox(@RequestParam(value = "pizzaID", required = true) Integer pizzaID, @RequestParam(value = "boxID", required = true) Integer boxID, @Valid @RequestBody BoxedPizza boxRequest){
         if(!pizzaRepository.existsById(pizzaID)){
             throw new NotFoundException("Pizzatype is not found with provided ID " + pizzaID);
         }
@@ -58,7 +59,7 @@ public class BoxedPizzaController {
 
     @DeleteMapping("pizzas/{pizzaID}/boxedpizzas")
     @ApiOperation(value = "Delete boxed pizza", nickname = "deleteBoxedPizza")
-    public ResponseEntity<?> deleteBox(@RequestBody Integer pizzaID, @RequestBody Integer boxID){
+    public ResponseEntity<?> deleteBox(@RequestParam(value = "pizzaID", required = true) Integer pizzaID, @RequestParam(value = "boxID", required = true) Integer boxID){
         if(!pizzaRepository.existsById(pizzaID)){
             throw new NotFoundException("Pizzatype is not found with provided ID " + pizzaID);
         }

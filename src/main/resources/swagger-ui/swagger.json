@@ -26,8 +26,8 @@
         "description" : "",
         "operationId" : "getBoxedPizzas",
         "parameters" : [ {
-          "name" : "",
-          "in" : "path",
+          "name" : "pizzaID",
+          "in" : "query",
           "required" : true,
           "type" : "integer",
           "format" : "int32"
@@ -36,7 +36,7 @@
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/BoxedPizza"
+              "$ref" : "#/definitions/BoxedPizzaWrapper"
             }
           }
         }
@@ -47,8 +47,8 @@
         "description" : "",
         "operationId" : "addBoxedPizza",
         "parameters" : [ {
-          "name" : "",
-          "in" : "path",
+          "name" : "pizzaID",
+          "in" : "query",
           "required" : true,
           "type" : "integer",
           "format" : "int32"
@@ -75,21 +75,17 @@
         "description" : "",
         "operationId" : "deleteBoxedPizza",
         "parameters" : [ {
-          "in" : "body",
-          "name" : "body",
-          "required" : false,
-          "schema" : {
-            "type" : "integer",
-            "format" : "int32"
-          }
+          "name" : "pizzaID",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
         }, {
-          "in" : "body",
-          "name" : "body",
-          "required" : false,
-          "schema" : {
-            "type" : "integer",
-            "format" : "int32"
-          }
+          "name" : "boxID",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
         } ],
         "responses" : {
           "200" : {
@@ -108,14 +104,14 @@
         "description" : "",
         "operationId" : "updateBoxedPizza",
         "parameters" : [ {
-          "name" : "",
-          "in" : "path",
+          "name" : "pizzaID",
+          "in" : "query",
           "required" : true,
           "type" : "integer",
           "format" : "int32"
         }, {
-          "name" : "",
-          "in" : "path",
+          "name" : "boxID",
+          "in" : "query",
           "required" : true,
           "type" : "integer",
           "format" : "int32"
@@ -144,8 +140,8 @@
         "description" : "",
         "operationId" : "getOrders",
         "parameters" : [ {
-          "name" : "",
-          "in" : "path",
+          "name" : "personID",
+          "in" : "query",
           "required" : true,
           "type" : "integer",
           "format" : "int32"
@@ -154,7 +150,7 @@
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/Order"
+              "$ref" : "#/definitions/OrderWrapper"
             }
           }
         }
@@ -165,8 +161,8 @@
         "description" : "",
         "operationId" : "addOrder",
         "parameters" : [ {
-          "name" : "",
-          "in" : "path",
+          "name" : "personID",
+          "in" : "query",
           "required" : true,
           "type" : "integer",
           "format" : "int32"
@@ -193,21 +189,17 @@
         "description" : "",
         "operationId" : "deleteOrders",
         "parameters" : [ {
-          "in" : "body",
-          "name" : "body",
-          "required" : false,
-          "schema" : {
-            "type" : "integer",
-            "format" : "int32"
-          }
+          "name" : "personID",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
         }, {
-          "in" : "body",
-          "name" : "body",
-          "required" : false,
-          "schema" : {
-            "type" : "integer",
-            "format" : "int32"
-          }
+          "name" : "orderID",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
         } ],
         "responses" : {
           "200" : {
@@ -226,14 +218,14 @@
         "description" : "",
         "operationId" : "updateOrder",
         "parameters" : [ {
-          "name" : "",
-          "in" : "path",
+          "name" : "personID",
+          "in" : "query",
           "required" : true,
           "type" : "integer",
           "format" : "int32"
         }, {
-          "name" : "",
-          "in" : "path",
+          "name" : "orderID",
+          "in" : "query",
           "required" : true,
           "type" : "integer",
           "format" : "int32"
@@ -265,7 +257,7 @@
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/PersonalDetails"
+              "$ref" : "#/definitions/PersonalDetailsWrapper"
             }
           }
         }
@@ -298,13 +290,11 @@
         "description" : "",
         "operationId" : "deletePersonalDetails",
         "parameters" : [ {
-          "in" : "body",
-          "name" : "body",
-          "required" : false,
-          "schema" : {
-            "type" : "integer",
-            "format" : "int32"
-          }
+          "name" : "personID",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
         } ],
         "responses" : {
           "200" : {
@@ -323,8 +313,8 @@
         "description" : "",
         "operationId" : "updatePersonalDetails",
         "parameters" : [ {
-          "name" : "",
-          "in" : "path",
+          "name" : "personID",
+          "in" : "query",
           "required" : true,
           "type" : "integer",
           "format" : "int32"
@@ -356,7 +346,7 @@
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/Pizza"
+              "$ref" : "#/definitions/PizzaWrapper"
             }
           }
         }
@@ -389,13 +379,11 @@
         "description" : "",
         "operationId" : "deletePizza",
         "parameters" : [ {
-          "in" : "body",
-          "name" : "body",
-          "required" : false,
-          "schema" : {
-            "type" : "integer",
-            "format" : "int32"
-          }
+          "name" : "pizzaID",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
         } ],
         "responses" : {
           "200" : {
@@ -414,8 +402,8 @@
         "description" : "",
         "operationId" : "updatePizza",
         "parameters" : [ {
-          "name" : "",
-          "in" : "path",
+          "name" : "pizzaID",
+          "in" : "query",
           "required" : true,
           "type" : "integer",
           "format" : "int32"
@@ -437,31 +425,6 @@
         }
       }
     },
-    "/api/sauce/pizzas/{pizzaID}/sauces" : {
-      "delete" : {
-        "tags" : [ "Sauce" ],
-        "summary" : "Get sauces",
-        "description" : "",
-        "operationId" : "deleteSauces",
-        "parameters" : [ {
-          "in" : "body",
-          "name" : "body",
-          "required" : false,
-          "schema" : {
-            "type" : "integer",
-            "format" : "int32"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "type" : "object"
-            }
-          }
-        }
-      }
-    },
     "/api/sauce/sauces" : {
       "get" : {
         "tags" : [ "Sauce" ],
@@ -472,7 +435,7 @@
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/Sauce"
+              "$ref" : "#/definitions/SauceWrapper"
             }
           }
         }
@@ -498,6 +461,27 @@
             }
           }
         }
+      },
+      "delete" : {
+        "tags" : [ "Sauce" ],
+        "summary" : "Get sauces",
+        "description" : "",
+        "operationId" : "deleteSauces",
+        "parameters" : [ {
+          "name" : "sauceID",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "object"
+            }
+          }
+        }
       }
     },
     "/api/sauce/sauces/{sauceID}" : {
@@ -507,8 +491,8 @@
         "description" : "",
         "operationId" : "updateSauces",
         "parameters" : [ {
-          "name" : "",
-          "in" : "path",
+          "name" : "sauceID",
+          "in" : "query",
           "required" : true,
           "type" : "integer",
           "format" : "int32"
@@ -537,8 +521,8 @@
         "description" : "",
         "operationId" : "getToppings",
         "parameters" : [ {
-          "name" : "",
-          "in" : "path",
+          "name" : "pizzaID",
+          "in" : "query",
           "required" : true,
           "type" : "integer",
           "format" : "int32"
@@ -547,7 +531,7 @@
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/Topping"
+              "$ref" : "#/definitions/ToppingWrapper"
             }
           }
         }
@@ -558,8 +542,8 @@
         "description" : "",
         "operationId" : "addTopping",
         "parameters" : [ {
-          "name" : "",
-          "in" : "path",
+          "name" : "pizzaID",
+          "in" : "query",
           "required" : true,
           "type" : "integer",
           "format" : "int32"
@@ -586,21 +570,17 @@
         "description" : "",
         "operationId" : "deleteTopping",
         "parameters" : [ {
-          "in" : "body",
-          "name" : "body",
-          "required" : false,
-          "schema" : {
-            "type" : "integer",
-            "format" : "int32"
-          }
+          "name" : "pizzaID",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
         }, {
-          "in" : "body",
-          "name" : "body",
-          "required" : false,
-          "schema" : {
-            "type" : "integer",
-            "format" : "int32"
-          }
+          "name" : "toppingID",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
         } ],
         "responses" : {
           "200" : {
@@ -619,14 +599,14 @@
         "description" : "",
         "operationId" : "updateTopping",
         "parameters" : [ {
-          "name" : "",
-          "in" : "path",
+          "name" : "pizzaID",
+          "in" : "query",
           "required" : true,
           "type" : "integer",
           "format" : "int32"
         }, {
-          "name" : "",
-          "in" : "path",
+          "name" : "toppingID",
+          "in" : "query",
           "required" : true,
           "type" : "integer",
           "format" : "int32"
@@ -673,6 +653,17 @@
         }
       }
     },
+    "BoxedPizzaWrapper" : {
+      "type" : "object",
+      "properties" : {
+        "boxedPizzas" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/BoxedPizza"
+          }
+        }
+      }
+    },
     "Order" : {
       "type" : "object",
       "properties" : {
@@ -681,10 +672,6 @@
           "format" : "int32"
         },
         "orderPrice" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "quantity" : {
           "type" : "integer",
           "format" : "int32"
         },
@@ -699,6 +686,17 @@
           "uniqueItems" : true,
           "items" : {
             "$ref" : "#/definitions/BoxedPizza"
+          }
+        }
+      }
+    },
+    "OrderWrapper" : {
+      "type" : "object",
+      "properties" : {
+        "orders" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Order"
           }
         }
       }
@@ -724,6 +722,17 @@
         }
       }
     },
+    "PersonalDetailsWrapper" : {
+      "type" : "object",
+      "properties" : {
+        "personalDetails" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/PersonalDetails"
+          }
+        }
+      }
+    },
     "Pizza" : {
       "type" : "object",
       "properties" : {
@@ -744,6 +753,17 @@
         }
       }
     },
+    "PizzaWrapper" : {
+      "type" : "object",
+      "properties" : {
+        "pizzas" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Pizza"
+          }
+        }
+      }
+    },
     "Sauce" : {
       "type" : "object",
       "properties" : {
@@ -758,6 +778,17 @@
         }
       }
     },
+    "SauceWrapper" : {
+      "type" : "object",
+      "properties" : {
+        "sauces" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Sauce"
+          }
+        }
+      }
+    },
     "Topping" : {
       "type" : "object",
       "properties" : {
@@ -769,6 +800,17 @@
         },
         "isSpicy" : {
           "type" : "boolean"
+        }
+      }
+    },
+    "ToppingWrapper" : {
+      "type" : "object",
+      "properties" : {
+        "toppings" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Topping"
+          }
         }
       }
     }

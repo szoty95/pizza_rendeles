@@ -3,6 +3,7 @@ package com.onlab.pizza.controller;
 import com.onlab.pizza.exception.NotFoundException;
 import com.onlab.pizza.model.PersonalDetails;
 import com.onlab.pizza.repository.PersonalDetailsRepository;
+import com.onlab.pizza.wrapper.PersonalDetailsWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -23,9 +25,9 @@ public class PersonalDetailsController {
     private PersonalDetailsRepository personalDetailsRepository;
 
     @GetMapping("/people")
-    @ApiOperation(value = "Get all personal details", response = PersonalDetails.class, nickname = "getPersonalDetails")
-    public Page<PersonalDetails> getPeople(Pageable pageable){
-        return personalDetailsRepository.findAll(pageable);
+    @ApiOperation(value = "Get all personal details", response = PersonalDetailsWrapper.class, nickname = "getPersonalDetails")
+    public List<PersonalDetails> getPeople(){
+        return personalDetailsRepository.findAll();
     }
 
     @PostMapping("/people")
@@ -36,7 +38,7 @@ public class PersonalDetailsController {
 
     @PutMapping("/people/{personID}")
     @ApiOperation(value = "Update personal details", response = PersonalDetails.class, nickname = "updatePersonalDetails")
-    public PersonalDetails updatePerson(@PathVariable Integer personID, @Valid @RequestBody PersonalDetails personRequest){
+    public PersonalDetails updatePerson(@RequestParam(value = "personID", required = true) Integer personID, @Valid @RequestBody PersonalDetails personRequest){
         return personalDetailsRepository.findById(personID).map(person -> {
             person.setPersonalName(personRequest.getPersonalName());
             person.setAddress(personRequest.getAddress());
@@ -49,7 +51,7 @@ public class PersonalDetailsController {
 
     @DeleteMapping("people")
     @ApiOperation(value = "Delete personal details", nickname = "deletePersonalDetails")
-    public ResponseEntity<?> deletePerson(@RequestBody Integer personID){
+    public ResponseEntity<?> deletePerson(@RequestParam(value = "personID", required = true) Integer personID){
         return personalDetailsRepository.findById(personID).map(person -> {
             personalDetailsRepository.delete(person);
             return ResponseEntity.ok().build();

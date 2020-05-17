@@ -1,0 +1,383 @@
+@import "mixins";
+@import "colors";
+
+.app-header {
+  max-width: 1264px;
+  margin: 0 auto;
+  text-align: center;
+  display: block;
+  border: 2px solid #8b4513;
+  border-bottom: 0;
+  background: #fff8dc;
+  @include border-top-right-radius(4px);
+  @include border-top-left-radius(4px);
+  cursor: default;
+
+  p {
+    margin-bottom: 0;
+  }
+}
+
+.app-body {
+  max-width: 1264px;
+  display: block;
+  border: 2px solid #8b4513;
+  border-top: 0;
+  background: #fff8dc;
+  @include border-bottom-right-radius(4px);
+  @include border-bottom-left-radius(4px);
+  height: 100%;
+  margin: 0 auto 20px;
+  overflow: auto;
+  position: relative;
+
+  .body-wrapper {
+    max-width: calc(100% - 340px);
+    margin-left: 40px;
+    margin-bottom: 60px;
+    cursor: default;
+
+    .button-wrapper {
+      button {
+        padding: 12px;
+        font-size: 16px;
+        font-weight: bold;
+        color: #fff;
+        background: $buttonColor;
+        @include border-radius(5px);
+        @include box-shadow(none);
+        outline: 0;
+        border: 0;
+        @include transition(background .5s);
+        cursor: pointer;
+
+        &:hover {
+          background: $hoverColor;
+          @include transition(background .5s);
+        }
+      }
+
+      .list-show-button {
+        margin-right: 30px;
+      }
+    }
+
+    h3 {
+      margin-top: 0;
+    }
+
+    ul {
+      padding-left: 30px;
+
+      .pizza-type {
+        max-width: 60%;
+        display: flex;
+        line-height: 30px;
+        font-weight: bold;
+        text-decoration: underline;
+        color: black;
+        cursor: pointer;
+
+        &:hover, &:focus {
+          color: $hoverColor;
+        }
+
+        .pizza-toppings {
+          display: block;
+
+          div {
+            display: inline-block;
+
+            p {
+              display: inline-block;
+              margin-left: 5px;
+              margin-top: 0;
+              margin-bottom: 0;
+              color: #003767;
+              cursor: text;
+
+              &:hover, &:focus {
+                color: #003767;
+              }
+
+            }
+          }
+        }
+      }
+    }
+
+  }
+
+  .offer-page {
+    display: inline-block;
+    text-align: center;
+    background: url("../assets/images/order.jpg");
+    margin-bottom: 20px;
+    @include border-radius(5px);
+
+    &:nth-child(2n+1) {
+      margin-right: 10px;
+    }
+
+    &:nth-child(2n) {
+      margin-right: 20px;
+      margin-left: 10px;
+    }
+
+    .pizza-head {
+      .pizza-header {
+        color: #fff8dc;
+        margin: 10px auto;
+        width: 40%;
+        background: rgba(0, 0, 0, 0.10);
+      }
+
+      .pizza-image {
+        width: 40%;
+      }
+    }
+
+    .pizza-body {
+      .option-chooser {
+        display: block;
+
+        .thickness {
+          display: inline-block;
+          width: 40%;
+          margin-left: 5%;
+          margin-right: 5%;
+          padding-top: 10px;
+          padding-bottom: 10px;
+
+          .thick-button {
+            margin-left: 5%;
+            margin-right: 5%;
+            margin-bottom: 10px;
+            padding: 8px;
+
+            &.disabled{
+              background: $errorColor;
+              border-color: $errorColor;
+              cursor: not-allowed;
+            }
+          }
+
+          .thin-button {
+            margin-left: 5%;
+            margin-right: 5%;
+            padding: 8px;
+
+            &.disabled{
+              background: $errorColor;
+              border-color: $errorColor;
+              cursor: not-allowed;
+            }
+          }
+
+          button{
+            @include border-radius(4px);
+            background: limegreen;
+            color: #fff;
+            font-weight: bold;
+            border: 1px solid green;
+            @include transition(background .5s);
+            cursor: pointer;
+
+
+            &:hover{
+              background: $hoverColor;
+              border-color: darkorange;
+            }
+
+            &:focus{
+              outline: 0;
+            }
+          }
+        }
+
+        .diameter {
+          width: 40%;
+          display: inline-block;
+          margin-left: 5%;
+          margin-right: 5%;
+
+          .button-32 {
+            margin-left: 5%;
+            margin-right: 5%;
+            margin-bottom: 10px;
+            padding: 8px;
+            width: 50%;
+
+            &.disabled{
+              background: $errorColor;
+              border-color: $errorColor;
+              cursor: not-allowed;
+            }
+          }
+
+          .button-50 {
+            margin-left: 5%;
+            margin-right: 5%;
+            padding: 8px;
+            width: 50%;
+
+            &.disabled{
+              background: $errorColor;
+              border-color: $errorColor;
+              cursor: not-allowed;
+            }
+          }
+
+          button{
+            @include border-radius(4px);
+            background: limegreen;
+            color: #fff;
+            font-weight: bold;
+            border: 1px solid green;
+            @include transition(background .5s);
+            cursor: pointer;
+
+            &:hover{
+              background: $hoverColor;
+              border-color: darkorange;
+              @include transition(background .5s);
+            }
+
+            &:focus{
+              outline: 0;
+            }
+          }
+        }
+
+        .price-area {
+          display: block;
+          background: rgba(0,0,0,0.1);
+          color: #fff8dc;
+
+          .show-price {
+            display:inline-block;
+            font-weight: bold;
+            font-size: 18px;
+          }
+
+          .choose-price {
+            display: inline-block;
+            margin-left: 20px;
+          }
+        }
+
+      }
+
+      .button-area {
+        background: rgba(0,0,0,0.1);
+        margin-bottom: 10px;
+
+        .button-wrapper {
+          margin-bottom: 20px;
+          margin-top: 10px;
+
+          .placeholder {
+            width: 22px;
+            height: 22px;
+            border: 0;
+            padding: 4px;
+            @include border-radius(4px);
+            margin-right: 10px;
+            cursor: not-allowed;
+          }
+
+          button{
+            width: 32px;
+            height: 32px;
+            font-size: 18px;
+            line-height: 16px;
+            text-align: center;
+            @include border-radius(4px);
+            background: limegreen;
+            color: #fff;
+            font-weight: bold;
+            border: 1px solid green;
+            @include transition(background .5s);
+            cursor: pointer;
+
+            &:hover{
+              background: $hoverColor;
+              border-color: darkorange;
+              @include transition(background .5s);
+            }
+
+            &:focus{
+              outline: 0;
+            }
+          }
+          .plus-button {
+          }
+
+          .minus-button {
+          }
+        }
+
+        .order-button {
+          padding: 12px;
+          font-size: 18px;
+          font-weight: bold;
+          border: 0;
+          @include border-radius(4px);
+          color: #fff;
+          background: brown;
+          @include transition(background .5s);
+          cursor: pointer;
+
+          &:hover{
+            @include transition(background .5s);
+            background: #A50001;
+          }
+          &:focus{
+            outline: 0;
+          }
+        }
+      }
+    }
+
+  }
+
+  .basket {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 3;
+    width: 340px;
+    max-height: 500px;
+    overflow: auto;
+    display: inline-block;
+    float: right;
+    border: 2px solid $borderColor;
+    margin-right: 40px;
+    @include border-radius(2px);
+    text-align: center;
+    @include box-shadow(4px);
+
+    .fa-shopping-basket {
+      font-family: FontAwesome;
+      font-style: normal;
+      display: inline-block;
+      margin-left: 20px;
+    }
+
+    p {
+      display: inline-block;
+    }
+
+    .item-holder {
+      list-style: none;
+    }
+  }
+
+}
+
+.app-footer {
+  width: 100%;
+  text-align: center;
+  padding: 20px 0;
+  background: rgba(255, 255, 255, 0.25);
+}

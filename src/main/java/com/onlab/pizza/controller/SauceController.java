@@ -3,15 +3,15 @@ package com.onlab.pizza.controller;
 import com.onlab.pizza.exception.NotFoundException;
 import com.onlab.pizza.model.Sauce;
 import com.onlab.pizza.repository.SauceRepository;
+import com.onlab.pizza.wrapper.SauceWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.awt.print.Pageable;
+import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -23,9 +23,9 @@ public class SauceController {
     private SauceRepository sauceRepository;
 
     @GetMapping("/sauces")
-    @ApiOperation(value = "Get sauces", response = Sauce.class, nickname = "getSauces")
-    public Page<Sauce> getSauces(Pageable pageable){
-        return sauceRepository.findAll((org.springframework.data.domain.Pageable) pageable);
+    @ApiOperation(value = "Get sauces", response = SauceWrapper.class, nickname = "getSauces")
+    public List<Sauce> getSauces(){
+        return sauceRepository.findAll();
     }
 
     @PostMapping("/sauces")
@@ -36,7 +36,7 @@ public class SauceController {
 
     @PutMapping("/sauces/{sauceID}")
     @ApiOperation(value = "Update sauce", response = Sauce.class, nickname = "updateSauces")
-    public Sauce updateSauce(@PathVariable Integer sauceID, @Valid @RequestBody Sauce sauceRequest){
+    public Sauce updateSauce(@RequestParam(value = "sauceID", required = true) Integer sauceID, @Valid @RequestBody Sauce sauceRequest){
         return sauceRepository.findById(sauceID).map(sauce -> {
             sauce.setSauceName(sauceRequest.getSauceName());
             sauce.setSpicy(sauceRequest.getSpicy());
@@ -45,9 +45,9 @@ public class SauceController {
         }).orElseThrow(()-> new NotFoundException("Sauce is not found with provided ID " + sauceID));
     }
 
-    @DeleteMapping("/pizzas/{pizzaID}/sauces")
+    @DeleteMapping("/sauces")
     @ApiOperation(value = "Get sauces", nickname = "deleteSauces")
-    public ResponseEntity<?> deleteSauce(@RequestBody Integer sauceID){
+    public ResponseEntity<?> deleteSauce(@RequestParam(value = "sauceID", required = true) Integer sauceID){
         return sauceRepository.findById(sauceID).map(sauce -> {
             sauceRepository.delete(sauce);
             return ResponseEntity.ok().build();

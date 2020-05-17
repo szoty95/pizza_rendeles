@@ -19,6 +19,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { PersonalDetails } from '../model/personalDetails';
+import { PersonalDetailsWrapper } from '../model/personalDetailsWrapper';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -101,15 +102,23 @@ export class PersonalDetailsService {
     /**
      * Delete personal details
      * 
-     * @param body 
+     * @param personID 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deletePersonalDetails(body?: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public deletePersonalDetails(body?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public deletePersonalDetails(body?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public deletePersonalDetails(body?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public deletePersonalDetails(personID: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public deletePersonalDetails(personID: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public deletePersonalDetails(personID: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public deletePersonalDetails(personID: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
+        if (personID === null || personID === undefined) {
+            throw new Error('Required parameter personID was null or undefined when calling deletePersonalDetails.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (personID !== undefined && personID !== null) {
+            queryParameters = queryParameters.set('personID', <any>personID);
+        }
 
         let headers = this.defaultHeaders;
 
@@ -124,13 +133,10 @@ export class PersonalDetailsService {
         // to determine the Content-Type header
         const consumes: string[] = [
         ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
 
         return this.httpClient.delete<any>(`${this.basePath}/api/personalDetails/people`,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -145,9 +151,9 @@ export class PersonalDetailsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getPersonalDetails(observe?: 'body', reportProgress?: boolean): Observable<PersonalDetails>;
-    public getPersonalDetails(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PersonalDetails>>;
-    public getPersonalDetails(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PersonalDetails>>;
+    public getPersonalDetails(observe?: 'body', reportProgress?: boolean): Observable<PersonalDetailsWrapper>;
+    public getPersonalDetails(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PersonalDetailsWrapper>>;
+    public getPersonalDetails(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PersonalDetailsWrapper>>;
     public getPersonalDetails(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let headers = this.defaultHeaders;
@@ -164,7 +170,7 @@ export class PersonalDetailsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<PersonalDetails>(`${this.basePath}/api/personalDetails/people`,
+        return this.httpClient.get<PersonalDetailsWrapper>(`${this.basePath}/api/personalDetails/people`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -177,20 +183,25 @@ export class PersonalDetailsService {
     /**
      * Update personal details
      * 
-     * @param  
+     * @param personID 
      * @param body 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updatePersonalDetails(: number, body?: PersonalDetails, observe?: 'body', reportProgress?: boolean): Observable<PersonalDetails>;
-    public updatePersonalDetails(: number, body?: PersonalDetails, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PersonalDetails>>;
-    public updatePersonalDetails(: number, body?: PersonalDetails, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PersonalDetails>>;
-    public updatePersonalDetails(: number, body?: PersonalDetails, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public updatePersonalDetails(personID: number, body?: PersonalDetails, observe?: 'body', reportProgress?: boolean): Observable<PersonalDetails>;
+    public updatePersonalDetails(personID: number, body?: PersonalDetails, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<PersonalDetails>>;
+    public updatePersonalDetails(personID: number, body?: PersonalDetails, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<PersonalDetails>>;
+    public updatePersonalDetails(personID: number, body?: PersonalDetails, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if ( === null ||  === undefined) {
-            throw new Error('Required parameter  was null or undefined when calling updatePersonalDetails.');
+        if (personID === null || personID === undefined) {
+            throw new Error('Required parameter personID was null or undefined when calling updatePersonalDetails.');
         }
 
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (personID !== undefined && personID !== null) {
+            queryParameters = queryParameters.set('personID', <any>personID);
+        }
 
         let headers = this.defaultHeaders;
 
@@ -213,6 +224,7 @@ export class PersonalDetailsService {
         return this.httpClient.put<PersonalDetails>(`${this.basePath}/api/personalDetails/people/${encodeURIComponent(String(personID))}`,
             body,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

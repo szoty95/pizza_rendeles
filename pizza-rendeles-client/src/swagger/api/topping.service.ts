@@ -19,6 +19,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { Topping } from '../model/topping';
+import { ToppingWrapper } from '../model/toppingWrapper';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -59,20 +60,25 @@ export class ToppingService {
     /**
      * Add new topping
      * 
-     * @param  
+     * @param pizzaID 
      * @param body 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public addTopping(: number, body?: Topping, observe?: 'body', reportProgress?: boolean): Observable<Topping>;
-    public addTopping(: number, body?: Topping, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Topping>>;
-    public addTopping(: number, body?: Topping, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Topping>>;
-    public addTopping(: number, body?: Topping, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public addTopping(pizzaID: number, body?: Topping, observe?: 'body', reportProgress?: boolean): Observable<Topping>;
+    public addTopping(pizzaID: number, body?: Topping, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Topping>>;
+    public addTopping(pizzaID: number, body?: Topping, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Topping>>;
+    public addTopping(pizzaID: number, body?: Topping, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if ( === null ||  === undefined) {
-            throw new Error('Required parameter  was null or undefined when calling addTopping.');
+        if (pizzaID === null || pizzaID === undefined) {
+            throw new Error('Required parameter pizzaID was null or undefined when calling addTopping.');
         }
 
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (pizzaID !== undefined && pizzaID !== null) {
+            queryParameters = queryParameters.set('pizzaID', <any>pizzaID);
+        }
 
         let headers = this.defaultHeaders;
 
@@ -95,6 +101,7 @@ export class ToppingService {
         return this.httpClient.post<Topping>(`${this.basePath}/api/topping/pizzas/${encodeURIComponent(String(pizzaID))}/toppings`,
             body,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -106,17 +113,31 @@ export class ToppingService {
     /**
      * Delete topping
      * 
-     * @param body 
-     * @param body2 
+     * @param pizzaID 
+     * @param toppingID 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteTopping(body?: number, body2?: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public deleteTopping(body?: number, body2?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public deleteTopping(body?: number, body2?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public deleteTopping(body?: number, body2?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public deleteTopping(pizzaID: number, toppingID: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public deleteTopping(pizzaID: number, toppingID: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public deleteTopping(pizzaID: number, toppingID: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public deleteTopping(pizzaID: number, toppingID: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
+        if (pizzaID === null || pizzaID === undefined) {
+            throw new Error('Required parameter pizzaID was null or undefined when calling deleteTopping.');
+        }
 
+        if (toppingID === null || toppingID === undefined) {
+            throw new Error('Required parameter toppingID was null or undefined when calling deleteTopping.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (pizzaID !== undefined && pizzaID !== null) {
+            queryParameters = queryParameters.set('pizzaID', <any>pizzaID);
+        }
+        if (toppingID !== undefined && toppingID !== null) {
+            queryParameters = queryParameters.set('toppingID', <any>toppingID);
+        }
 
         let headers = this.defaultHeaders;
 
@@ -131,13 +152,10 @@ export class ToppingService {
         // to determine the Content-Type header
         const consumes: string[] = [
         ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
 
         return this.httpClient.delete<any>(`${this.basePath}/api/topping/pizzas/${encodeURIComponent(String(pizzaID))}/toppings`,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -149,17 +167,22 @@ export class ToppingService {
     /**
      * Get all toppings
      * 
-     * @param  
+     * @param pizzaID 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getToppings(: number, observe?: 'body', reportProgress?: boolean): Observable<Topping>;
-    public getToppings(: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Topping>>;
-    public getToppings(: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Topping>>;
-    public getToppings(: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getToppings(pizzaID: number, observe?: 'body', reportProgress?: boolean): Observable<ToppingWrapper>;
+    public getToppings(pizzaID: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ToppingWrapper>>;
+    public getToppings(pizzaID: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ToppingWrapper>>;
+    public getToppings(pizzaID: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if ( === null ||  === undefined) {
-            throw new Error('Required parameter  was null or undefined when calling getToppings.');
+        if (pizzaID === null || pizzaID === undefined) {
+            throw new Error('Required parameter pizzaID was null or undefined when calling getToppings.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (pizzaID !== undefined && pizzaID !== null) {
+            queryParameters = queryParameters.set('pizzaID', <any>pizzaID);
         }
 
         let headers = this.defaultHeaders;
@@ -176,8 +199,9 @@ export class ToppingService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<Topping>(`${this.basePath}/api/topping/pizzas/${encodeURIComponent(String(pizzaID))}/toppings`,
+        return this.httpClient.get<ToppingWrapper>(`${this.basePath}/api/topping/pizzas/${encodeURIComponent(String(pizzaID))}/toppings`,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -189,25 +213,33 @@ export class ToppingService {
     /**
      * Update topping
      * 
-     * @param  
-     * @param 2 
+     * @param pizzaID 
+     * @param toppingID 
      * @param body 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateTopping(: number, 2: number, body?: Topping, observe?: 'body', reportProgress?: boolean): Observable<Topping>;
-    public updateTopping(: number, 2: number, body?: Topping, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Topping>>;
-    public updateTopping(: number, 2: number, body?: Topping, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Topping>>;
-    public updateTopping(: number, 2: number, body?: Topping, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public updateTopping(pizzaID: number, toppingID: number, body?: Topping, observe?: 'body', reportProgress?: boolean): Observable<Topping>;
+    public updateTopping(pizzaID: number, toppingID: number, body?: Topping, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Topping>>;
+    public updateTopping(pizzaID: number, toppingID: number, body?: Topping, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Topping>>;
+    public updateTopping(pizzaID: number, toppingID: number, body?: Topping, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if ( === null ||  === undefined) {
-            throw new Error('Required parameter  was null or undefined when calling updateTopping.');
+        if (pizzaID === null || pizzaID === undefined) {
+            throw new Error('Required parameter pizzaID was null or undefined when calling updateTopping.');
         }
 
-        if (2 === null || 2 === undefined) {
-            throw new Error('Required parameter 2 was null or undefined when calling updateTopping.');
+        if (toppingID === null || toppingID === undefined) {
+            throw new Error('Required parameter toppingID was null or undefined when calling updateTopping.');
         }
 
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (pizzaID !== undefined && pizzaID !== null) {
+            queryParameters = queryParameters.set('pizzaID', <any>pizzaID);
+        }
+        if (toppingID !== undefined && toppingID !== null) {
+            queryParameters = queryParameters.set('toppingID', <any>toppingID);
+        }
 
         let headers = this.defaultHeaders;
 
@@ -230,6 +262,7 @@ export class ToppingService {
         return this.httpClient.put<Topping>(`${this.basePath}/api/topping/pizzas/${encodeURIComponent(String(pizzaID))}/toppings/${encodeURIComponent(String(toppingID))}`,
             body,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

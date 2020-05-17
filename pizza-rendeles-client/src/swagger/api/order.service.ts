@@ -19,6 +19,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { Order } from '../model/order';
+import { OrderWrapper } from '../model/orderWrapper';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -59,20 +60,25 @@ export class OrderService {
     /**
      * Add new order
      * 
-     * @param  
+     * @param personID 
      * @param body 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public addOrder(: number, body?: Order, observe?: 'body', reportProgress?: boolean): Observable<Order>;
-    public addOrder(: number, body?: Order, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Order>>;
-    public addOrder(: number, body?: Order, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Order>>;
-    public addOrder(: number, body?: Order, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public addOrder(personID: number, body?: Order, observe?: 'body', reportProgress?: boolean): Observable<Order>;
+    public addOrder(personID: number, body?: Order, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Order>>;
+    public addOrder(personID: number, body?: Order, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Order>>;
+    public addOrder(personID: number, body?: Order, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if ( === null ||  === undefined) {
-            throw new Error('Required parameter  was null or undefined when calling addOrder.');
+        if (personID === null || personID === undefined) {
+            throw new Error('Required parameter personID was null or undefined when calling addOrder.');
         }
 
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (personID !== undefined && personID !== null) {
+            queryParameters = queryParameters.set('personID', <any>personID);
+        }
 
         let headers = this.defaultHeaders;
 
@@ -95,6 +101,7 @@ export class OrderService {
         return this.httpClient.post<Order>(`${this.basePath}/api/order/people/${encodeURIComponent(String(personID))}/orders`,
             body,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -106,17 +113,31 @@ export class OrderService {
     /**
      * Delete order
      * 
-     * @param body 
-     * @param body2 
+     * @param personID 
+     * @param orderID 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteOrders(body?: number, body2?: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public deleteOrders(body?: number, body2?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public deleteOrders(body?: number, body2?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public deleteOrders(body?: number, body2?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public deleteOrders(personID: number, orderID: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public deleteOrders(personID: number, orderID: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public deleteOrders(personID: number, orderID: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public deleteOrders(personID: number, orderID: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
+        if (personID === null || personID === undefined) {
+            throw new Error('Required parameter personID was null or undefined when calling deleteOrders.');
+        }
 
+        if (orderID === null || orderID === undefined) {
+            throw new Error('Required parameter orderID was null or undefined when calling deleteOrders.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (personID !== undefined && personID !== null) {
+            queryParameters = queryParameters.set('personID', <any>personID);
+        }
+        if (orderID !== undefined && orderID !== null) {
+            queryParameters = queryParameters.set('orderID', <any>orderID);
+        }
 
         let headers = this.defaultHeaders;
 
@@ -131,13 +152,10 @@ export class OrderService {
         // to determine the Content-Type header
         const consumes: string[] = [
         ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
 
         return this.httpClient.delete<any>(`${this.basePath}/api/order/people/${encodeURIComponent(String(personID))}/orders`,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -149,17 +167,22 @@ export class OrderService {
     /**
      * Get orders
      * 
-     * @param  
+     * @param personID 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getOrders(: number, observe?: 'body', reportProgress?: boolean): Observable<Order>;
-    public getOrders(: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Order>>;
-    public getOrders(: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Order>>;
-    public getOrders(: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getOrders(personID: number, observe?: 'body', reportProgress?: boolean): Observable<OrderWrapper>;
+    public getOrders(personID: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<OrderWrapper>>;
+    public getOrders(personID: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<OrderWrapper>>;
+    public getOrders(personID: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if ( === null ||  === undefined) {
-            throw new Error('Required parameter  was null or undefined when calling getOrders.');
+        if (personID === null || personID === undefined) {
+            throw new Error('Required parameter personID was null or undefined when calling getOrders.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (personID !== undefined && personID !== null) {
+            queryParameters = queryParameters.set('personID', <any>personID);
         }
 
         let headers = this.defaultHeaders;
@@ -176,8 +199,9 @@ export class OrderService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<Order>(`${this.basePath}/api/order/people/${encodeURIComponent(String(personID))}/orders`,
+        return this.httpClient.get<OrderWrapper>(`${this.basePath}/api/order/people/${encodeURIComponent(String(personID))}/orders`,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -189,25 +213,33 @@ export class OrderService {
     /**
      * Update order
      * 
-     * @param  
-     * @param 2 
+     * @param personID 
+     * @param orderID 
      * @param body 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateOrder(: number, 2: number, body?: Order, observe?: 'body', reportProgress?: boolean): Observable<Order>;
-    public updateOrder(: number, 2: number, body?: Order, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Order>>;
-    public updateOrder(: number, 2: number, body?: Order, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Order>>;
-    public updateOrder(: number, 2: number, body?: Order, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public updateOrder(personID: number, orderID: number, body?: Order, observe?: 'body', reportProgress?: boolean): Observable<Order>;
+    public updateOrder(personID: number, orderID: number, body?: Order, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Order>>;
+    public updateOrder(personID: number, orderID: number, body?: Order, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Order>>;
+    public updateOrder(personID: number, orderID: number, body?: Order, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if ( === null ||  === undefined) {
-            throw new Error('Required parameter  was null or undefined when calling updateOrder.');
+        if (personID === null || personID === undefined) {
+            throw new Error('Required parameter personID was null or undefined when calling updateOrder.');
         }
 
-        if (2 === null || 2 === undefined) {
-            throw new Error('Required parameter 2 was null or undefined when calling updateOrder.');
+        if (orderID === null || orderID === undefined) {
+            throw new Error('Required parameter orderID was null or undefined when calling updateOrder.');
         }
 
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (personID !== undefined && personID !== null) {
+            queryParameters = queryParameters.set('personID', <any>personID);
+        }
+        if (orderID !== undefined && orderID !== null) {
+            queryParameters = queryParameters.set('orderID', <any>orderID);
+        }
 
         let headers = this.defaultHeaders;
 
@@ -230,6 +262,7 @@ export class OrderService {
         return this.httpClient.put<Order>(`${this.basePath}/api/order/people/${encodeURIComponent(String(personID))}/orders/${encodeURIComponent(String(orderID))}`,
             body,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

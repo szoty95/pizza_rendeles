@@ -9,14 +9,9 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { BoxedPizza } from './boxedPizza';
-import { PersonalDetails } from './personalDetails';
+import { Pizza } from './pizza';
 
 
-export interface Order { 
-    orderID?: number;
-    orderPrice?: number;
-    orderDate?: string;
-    personalDetails?: PersonalDetails;
-    boxedPizzas?: Array<BoxedPizza>;
+export interface PizzaWrapper { 
+    pizzas?: Array<Pizza>;
 }
