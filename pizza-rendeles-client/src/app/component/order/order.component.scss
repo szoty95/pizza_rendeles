@@ -1,0 +1,238 @@
+@import "../data/mixins";
+@import "../data/colors";
+
+.app-body {
+  max-width: 1264px;
+  margin: 0 auto;
+  border: 2px solid #8b4513;
+  background: #fff8dc;
+  @include border-radius(5px);
+
+  .app-inner {
+    text-align: center;
+
+    .app-header {
+      font-size: 32px;
+    }
+
+    .box-list {
+      h3 {
+      }
+
+      ul {
+        padding: 0;
+        width: 50%;
+        margin: 0 auto 40px;
+        border: 2px solid #778899;
+        @include border-radius(4px);
+        background-image: radial-gradient(circle 827px at 47.3% 48%, rgba(255, 255, 255, 1) 0%, rgba(138, 192, 216, 1) 90%);
+
+
+        .box-item {
+          list-style: none;
+          display: block;
+
+          &:first-child {
+            margin-top: 8px;
+          }
+
+          p {
+            display: inline-block;
+            margin: 8px 10px;
+            color: $textColor;
+            font-weight: bold;
+            font-size: 18px;
+
+            &:last-child {
+              color: darkslategray;
+            }
+
+          }
+        }
+
+        .summary-p {
+          font-weight: bold;
+          padding-bottom: 20px;
+          padding-top: 20px;
+          margin-bottom: 0;
+          font-size: 18px;
+          border-top: 1px solid #778899;
+        }
+      }
+    }
+
+    .button-wrapper {
+      button {
+        margin: 10px 20px 20px;
+        padding: 8px;
+        border: 0;
+        @include border-radius(4px);
+        background: limegreen;
+        color: #fff;
+        font-weight: bold;
+        @include transition(background .5s);
+        cursor: pointer;
+
+        &:focus {
+          outline: 0;
+        }
+
+        &:hover {
+          background: $hoverColor;
+          @include transition(background .5s);
+        }
+
+        &.disabled {
+          background: lightgray;
+          border-color: lightgray;
+          color: darkgrey;
+          cursor: not-allowed;
+        }
+
+      }
+    }
+
+    .form-container {
+      text-align: center;
+
+      .name-selector {
+        width: 171px;
+        height: 24px;
+        line-height: 24px;
+        box-sizing: content-box;
+        margin-top: 15px;
+
+        &:focus{
+          outline: 0;
+          outline-offset: 0;
+        }
+
+      }
+
+      input{
+        display: block;
+        margin: 15px auto;
+        height: 20px;
+        line-height: 20px;
+        &:focus{
+          outline: 0;
+        }
+
+        &:last-child{
+          margin-bottom: 40px;
+        }
+      }
+
+      .address-shower {
+      }
+
+      .phone-shower {
+      }
+
+      .email-shower {
+      }
+
+      .name-input {
+      }
+
+      .address-input {
+      }
+
+      .phone-input {
+      }
+
+      .email-input {
+      }
+    }
+
+    .check-button {
+      padding: 12px;
+      font-size: 18px;
+      font-weight: bold;
+      @include border-radius(5px);
+      border: 0;
+      cursor: pointer;
+      background: brown;
+      color: #fff;
+      @include transition(background .5s);
+
+      &:focus {
+        outline: 0;
+      }
+
+      &:hover {
+        background: #720001;
+        @include transition(background .5s);
+      }
+
+      &.disabled {
+          background: lightgray;
+          color: darkgrey;
+          cursor: not-allowed;
+      }
+    }
+  }
+
+  .outer-button-wrapper {
+    max-width: 1264px;
+    margin: 0 auto;
+    text-align: center;
+
+    .finish-button {
+      margin: 10px 5% 30px 30%;
+      padding: 12px;
+      font-size: 20px;
+      @include border-radius(4px);
+      border: 1px solid darkslategray;
+      background: darkslategray;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      @include transition(border .5s);
+      @include transition(background .5s);
+
+      &:focus {
+        outline: 0;
+      }
+
+      &:hover {
+        background: $successColor;
+        border-color: $successColor;
+        @include transition(border .5s);
+        @include transition(background .5s);
+      }
+
+      &.disabled {
+        background: lightgray;
+        border-color: lightgray;
+        color: darkgrey;
+        cursor: not-allowed;
+      }
+    }
+
+    .back-button {
+      margin: 10px 30% 30px 5%;
+      padding: 10px;
+      font-size: 16px;
+      @include border-radius(4px);
+      border: 1px solid darkslategray;
+      background: darkslategray;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      @include transition(border .5s);
+      @include transition(background .5s);
+
+      &:focus {
+        outline: 0;
+      }
+
+      &:hover {
+        background: $errorColor;
+        border-color: $errorColor;
+        @include transition(border .5s);
+        @include transition(background .5s);
+      }
+    }
+  }
+}

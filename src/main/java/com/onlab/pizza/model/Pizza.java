@@ -9,6 +9,9 @@ import java.util.Collection;
 public class Pizza {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Id")
+    private int pizzaID;
     @Column(name = "Name")
     private String pizzaName;
 

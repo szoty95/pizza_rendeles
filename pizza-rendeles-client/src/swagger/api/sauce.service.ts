@@ -18,7 +18,6 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
-import { Sauce } from '../model/sauce';
 import { SauceWrapper } from '../model/sauceWrapper';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -58,94 +57,6 @@ export class SauceService {
 
 
     /**
-     * Add new sauce
-     * 
-     * @param body 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public addSauces(body?: Sauce, observe?: 'body', reportProgress?: boolean): Observable<Sauce>;
-    public addSauces(body?: Sauce, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Sauce>>;
-    public addSauces(body?: Sauce, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Sauce>>;
-    public addSauces(body?: Sauce, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
-
-        return this.httpClient.post<Sauce>(`${this.basePath}/api/sauce/sauces`,
-            body,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * Get sauces
-     * 
-     * @param sauceID 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public deleteSauces(sauceID: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public deleteSauces(sauceID: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public deleteSauces(sauceID: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public deleteSauces(sauceID: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (sauceID === null || sauceID === undefined) {
-            throw new Error('Required parameter sauceID was null or undefined when calling deleteSauces.');
-        }
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (sauceID !== undefined && sauceID !== null) {
-            queryParameters = queryParameters.set('sauceID', <any>sauceID);
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.delete<any>(`${this.basePath}/api/sauce/sauces`,
-            {
-                params: queryParameters,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
      * Get sauces
      * 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -172,59 +83,6 @@ export class SauceService {
 
         return this.httpClient.get<SauceWrapper>(`${this.basePath}/api/sauce/sauces`,
             {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * Update sauce
-     * 
-     * @param sauceID 
-     * @param body 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public updateSauces(sauceID: number, body?: Sauce, observe?: 'body', reportProgress?: boolean): Observable<Sauce>;
-    public updateSauces(sauceID: number, body?: Sauce, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Sauce>>;
-    public updateSauces(sauceID: number, body?: Sauce, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Sauce>>;
-    public updateSauces(sauceID: number, body?: Sauce, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (sauceID === null || sauceID === undefined) {
-            throw new Error('Required parameter sauceID was null or undefined when calling updateSauces.');
-        }
-
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (sauceID !== undefined && sauceID !== null) {
-            queryParameters = queryParameters.set('sauceID', <any>sauceID);
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
-
-        return this.httpClient.put<Sauce>(`${this.basePath}/api/sauce/sauces/${encodeURIComponent(String(sauceID))}`,
-            body,
-            {
-                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

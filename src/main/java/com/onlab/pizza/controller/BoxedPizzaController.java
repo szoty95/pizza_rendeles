@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -26,13 +25,15 @@ public class BoxedPizzaController {
     @Autowired
     private PizzaRepository pizzaRepository;
 
-    @GetMapping("pizzas/{pizzaID}/boxedpizzas")
+    @GetMapping("/boxedpizzas")
     @ApiOperation(value = "Get boxed pizzas", response = BoxedPizzaWrapper.class, nickname = "getBoxedPizzas")
-    public List<BoxedPizza> getBoxedPizzaByPizzaType(@RequestParam(value = "pizzaID", required = true) Integer pizzaID){
-        return boxedPizzaRepository.findByPizza(pizzaID);
+    public BoxedPizzaWrapper getBoxedPizzas(){
+        BoxedPizzaWrapper boxedPizzaWrapper = new BoxedPizzaWrapper();
+        boxedPizzaWrapper.setBoxedPizzas(boxedPizzaRepository.findAll());
+        return boxedPizzaWrapper;
     }
 
-    @PostMapping("pizzas/{pizzaID}/boxedpizzas")
+    @PostMapping("/boxedpizzas")
     @ApiOperation(value = "Add boxed pizza", response = BoxedPizza.class, nickname = "addBoxedPizza")
     public BoxedPizza addBox(@RequestParam(value = "pizzaID", required = true) Integer pizzaID, @Valid @RequestBody BoxedPizza boxedPizza){
         return pizzaRepository.findById(pizzaID).map(pizza -> {
@@ -41,7 +42,7 @@ public class BoxedPizzaController {
         }).orElseThrow(() -> new NotFoundException("Pizzatype is not found with provided ID " + pizzaID));
     }
 
-    @PutMapping("pizzas/{pizzaID}/boxedpizzas/{boxID}")
+    @PutMapping("/boxedpizzas")
     @ApiOperation(value = "Update boxed pizza", response = BoxedPizza.class, nickname = "updateBoxedPizza")
     public BoxedPizza updateBox(@RequestParam(value = "pizzaID", required = true) Integer pizzaID, @RequestParam(value = "boxID", required = true) Integer boxID, @Valid @RequestBody BoxedPizza boxRequest){
         if(!pizzaRepository.existsById(pizzaID)){
@@ -57,16 +58,12 @@ public class BoxedPizzaController {
         }).orElseThrow(() -> new NotFoundException("Pizzabox is not found with provided ID " + boxID));
     }
 
-    @DeleteMapping("pizzas/{pizzaID}/boxedpizzas")
-    @ApiOperation(value = "Delete boxed pizza", nickname = "deleteBoxedPizza")
-    public ResponseEntity<?> deleteBox(@RequestParam(value = "pizzaID", required = true) Integer pizzaID, @RequestParam(value = "boxID", required = true) Integer boxID){
-        if(!pizzaRepository.existsById(pizzaID)){
-            throw new NotFoundException("Pizzatype is not found with provided ID " + pizzaID);
+    @DeleteMapping("/boxedpizzas/{pizzaID}")
+    @ApiOperation(value = "Delete boxed pizza", response = Integer.class, nickname = "deleteBoxedPizza")
+    public ResponseEntity<?> deleteBox(@PathVariable(value = "pizzaID", required = true) Integer pizzaID){
+        if(boxedPizzaRepository.findById(pizzaID).isPresent()) {
+            boxedPizzaRepository.delete(boxedPizzaRepository.findById(pizzaID).get());
         }
-
-        return boxedPizzaRepository.findById(boxID).map(box -> {
-            boxedPizzaRepository.delete(box);
-            return ResponseEntity.ok().build();
-        }).orElseThrow(() -> new NotFoundException("Box is not found with provided ID " + boxID));
+        return ResponseEntity.ok(pizzaID);
     }
 }

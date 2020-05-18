@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -26,13 +25,15 @@ public class OrderController {
     @Autowired
     private PersonalDetailsRepository personalDetailsRepository;
 
-    @GetMapping("/people/{personID}/orders")
+    @GetMapping("/orders")
     @ApiOperation(value = "Get orders", response = OrderWrapper.class, nickname = "getOrders")
-    public List<Order> getOrdersByPersonID(@RequestParam(value = "personID", required = true) Integer personID){
-        return orderRepository.findByPersonalDetails(personID);
+    public OrderWrapper getOrders(){
+        OrderWrapper orderWrapper = new OrderWrapper();
+        orderWrapper.setOrders(orderRepository.findAll());
+        return orderWrapper;
     }
 
-    @PostMapping("/people/{personID}/orders")
+    @PostMapping("/orders")
     @ApiOperation(value = "Add new order", response = Order.class, nickname = "addOrder")
     public Order addOrder(@RequestParam(value = "personID", required = true) Integer personID, @Valid @RequestBody Order order){
         return personalDetailsRepository.findById(personID).map(person -> {
@@ -41,22 +42,7 @@ public class OrderController {
         }).orElseThrow(() -> new NotFoundException("Person is not found wih provided ID " + personID));
     }
 
-    @PutMapping("people/{personID}/orders/{orderID}")
-    @ApiOperation(value = "Update order", response = Order.class, nickname = "updateOrder")
-    public Order updateOrder(@RequestParam(value = "personID", required = true) Integer personID, @RequestParam(value = "orderID", required = true) Integer orderID, @Valid @RequestBody Order orderRequest){
-        if(!personalDetailsRepository.existsById(personID)){
-            throw new NotFoundException("Person is not found with provided ID " + personID);
-        }
-
-        return orderRepository.findById(orderID).map(order -> {
-            order.setOrderPrice(orderRequest.getOrderPrice());
-            order.setOrderDate(orderRequest.getOrderDate());
-
-            return orderRepository.save(order);
-        }).orElseThrow(() -> new NotFoundException("Order is not found with provided ID " + orderID));
-    }
-
-    @DeleteMapping("people/{personID}/orders")
+    @DeleteMapping("/orders")
     @ApiOperation(value = "Delete order", nickname = "deleteOrders")
     public ResponseEntity<?> deleteOrder(@RequestParam(value = "personID", required = true) Integer personID, @RequestParam(value = "orderID", required = true) Integer orderID){
         if(!personalDetailsRepository.existsById(personID)){

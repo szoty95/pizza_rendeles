@@ -18,7 +18,6 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
-import { Topping } from '../model/topping';
 import { ToppingWrapper } from '../model/toppingWrapper';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -58,113 +57,6 @@ export class ToppingService {
 
 
     /**
-     * Add new topping
-     * 
-     * @param pizzaID 
-     * @param body 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public addTopping(pizzaID: number, body?: Topping, observe?: 'body', reportProgress?: boolean): Observable<Topping>;
-    public addTopping(pizzaID: number, body?: Topping, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Topping>>;
-    public addTopping(pizzaID: number, body?: Topping, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Topping>>;
-    public addTopping(pizzaID: number, body?: Topping, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (pizzaID === null || pizzaID === undefined) {
-            throw new Error('Required parameter pizzaID was null or undefined when calling addTopping.');
-        }
-
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (pizzaID !== undefined && pizzaID !== null) {
-            queryParameters = queryParameters.set('pizzaID', <any>pizzaID);
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
-
-        return this.httpClient.post<Topping>(`${this.basePath}/api/topping/pizzas/${encodeURIComponent(String(pizzaID))}/toppings`,
-            body,
-            {
-                params: queryParameters,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * Delete topping
-     * 
-     * @param pizzaID 
-     * @param toppingID 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public deleteTopping(pizzaID: number, toppingID: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public deleteTopping(pizzaID: number, toppingID: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public deleteTopping(pizzaID: number, toppingID: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public deleteTopping(pizzaID: number, toppingID: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (pizzaID === null || pizzaID === undefined) {
-            throw new Error('Required parameter pizzaID was null or undefined when calling deleteTopping.');
-        }
-
-        if (toppingID === null || toppingID === undefined) {
-            throw new Error('Required parameter toppingID was null or undefined when calling deleteTopping.');
-        }
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (pizzaID !== undefined && pizzaID !== null) {
-            queryParameters = queryParameters.set('pizzaID', <any>pizzaID);
-        }
-        if (toppingID !== undefined && toppingID !== null) {
-            queryParameters = queryParameters.set('toppingID', <any>toppingID);
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.delete<any>(`${this.basePath}/api/topping/pizzas/${encodeURIComponent(String(pizzaID))}/toppings`,
-            {
-                params: queryParameters,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
      * Get all toppings
      * 
      * @param pizzaID 
@@ -199,68 +91,7 @@ export class ToppingService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<ToppingWrapper>(`${this.basePath}/api/topping/pizzas/${encodeURIComponent(String(pizzaID))}/toppings`,
-            {
-                params: queryParameters,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * Update topping
-     * 
-     * @param pizzaID 
-     * @param toppingID 
-     * @param body 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public updateTopping(pizzaID: number, toppingID: number, body?: Topping, observe?: 'body', reportProgress?: boolean): Observable<Topping>;
-    public updateTopping(pizzaID: number, toppingID: number, body?: Topping, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Topping>>;
-    public updateTopping(pizzaID: number, toppingID: number, body?: Topping, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Topping>>;
-    public updateTopping(pizzaID: number, toppingID: number, body?: Topping, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (pizzaID === null || pizzaID === undefined) {
-            throw new Error('Required parameter pizzaID was null or undefined when calling updateTopping.');
-        }
-
-        if (toppingID === null || toppingID === undefined) {
-            throw new Error('Required parameter toppingID was null or undefined when calling updateTopping.');
-        }
-
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (pizzaID !== undefined && pizzaID !== null) {
-            queryParameters = queryParameters.set('pizzaID', <any>pizzaID);
-        }
-        if (toppingID !== undefined && toppingID !== null) {
-            queryParameters = queryParameters.set('toppingID', <any>toppingID);
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
-
-        return this.httpClient.put<Topping>(`${this.basePath}/api/topping/pizzas/${encodeURIComponent(String(pizzaID))}/toppings/${encodeURIComponent(String(toppingID))}`,
-            body,
+        return this.httpClient.get<ToppingWrapper>(`${this.basePath}/api/topping/toppings`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,

@@ -12,7 +12,7 @@ public class BoxedPizza {
     private int pizzaID;
 
     @Column(name = "Size")
-    private int size; //diameter size in cm
+    private boolean isBig; //big or average
 
     @Column(name = "Thick")
     private boolean isThick; //pasta thickness
@@ -22,8 +22,8 @@ public class BoxedPizza {
 
     public BoxedPizza(){}
 
-    public BoxedPizza(int size, boolean isThick, int price){
-        this.size = size;
+    public BoxedPizza(boolean isBig, boolean isThick, int price){
+        this.isBig = isBig;
         this.isThick = isThick;
         this.price = price;
     }
@@ -35,12 +35,12 @@ public class BoxedPizza {
         return pizzaID;
     }
 
-    public int getSize() {
-        return size;
+    public boolean getSize() {
+        return isBig;
     }
 
-    public void setSize(int size) {
-        this.size = size;
+    public void setSize(boolean size) {
+        this.isBig = size;
     }
 
     public boolean getThick(){ return isThick;}

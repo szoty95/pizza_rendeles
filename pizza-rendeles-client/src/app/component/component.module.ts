@@ -5,6 +5,7 @@ import {CommonModule} from '@angular/common';
 import {DataComponent} from './data/data.component';
 import {ThanksComponent} from './thanks/thanks.component';
 import {ComponentRoutingModule} from './component-routing.module';
+import {OrderComponent} from './order/order.component';
 
 @NgModule({
   providers: [
@@ -17,7 +18,8 @@ import {ComponentRoutingModule} from './component-routing.module';
   ],
   declarations: [
     DataComponent,
-    ThanksComponent
+    ThanksComponent,
+    OrderComponent
   ],
   imports: [
     CommonModule,

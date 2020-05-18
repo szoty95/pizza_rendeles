@@ -1,0 +1,50 @@
+<div class="app-body">
+  <div class="app-inner">
+    <h2 class="app-header">Rendelési adatok</h2>
+
+    <div class="box-list">
+      <h3>Amit eddig rendelni tervezel:</h3>
+      <ul>
+        <li class="box-item" *ngFor="let box of boxes">
+          <p>{{box.pizza.pizzaName}}</p>
+          <p *ngIf="box.size">50cm</p>
+          <p *ngIf="!box.size">32cm</p>
+          <p *ngIf="box.thick">vastag tészta </p>
+          <p *ngIf="!box.thick">vékony tészta </p>
+          <p>{{box.price}} Ft</p>
+        </li>
+        <p class="summary-p">Fizetendő összeg: {{summary}} Ft</p>
+      </ul>
+    </div>
+
+    <div class="button-wrapper">
+      <button id="notNewButton" class="not-new" (click)="notStranger()">Rendeltem már itt!</button>
+      <button id="newButton" class="new" (click)="stranger()">Most járok itt először!</button>
+    </div>
+
+    <ng-container *ngIf="notStrangerVisible">
+      <div class="form-container">
+        <select id="nameSelector" class="name-selector"></select>
+        <input id="addressShower" class="address-shower" placeholder="Cím.." disabled/>
+        <input id="phoneShower" class="phone-shower" placeholder="Telefonszám.." disabled/>
+        <input id="emailShower" class="email-shower" placeholder="Email cím.." disabled/>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="strangerVisible">
+      <div class="form-container">
+        <input id="nameInput" class="name-input" placeholder="Teljes név" />
+        <input id="addressInput" class="address-input" placeholder="Cím"/>
+        <input id="phoneInput" class="phone-input" placeholder="Telefonszám"/>
+        <input id="emailInput" class="email-input" placeholder="Email cím"/>
+      </div>
+    </ng-container>
+    <button id="checkButton" class="check-button disabled" disabled (click)="orderChecked()">Végeztem</button>
+  </div>
+  <div class="outer-button-wrapper">
+    <button class="back-button" (click)="goBack()">Vissza</button>
+    <button id="finishButton" class="finish-button disabled" (click)="goThanks()" disabled>Megrendelem</button>
+  </div>
+
+
+</div>

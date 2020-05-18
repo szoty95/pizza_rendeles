@@ -14,8 +14,8 @@ import { Pizza } from './pizza';
 
 export interface BoxedPizza { 
     pizzaID?: number;
-    size?: number;
     price?: number;
     pizza?: Pizza;
+    size?: boolean;
     thick?: boolean;
 }

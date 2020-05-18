@@ -7,8 +7,6 @@ import com.onlab.pizza.wrapper.PersonalDetailsWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +34,7 @@ public class PersonalDetailsController {
         return personalDetailsRepository.save(personalDetails);
     }
 
-    @PutMapping("/people/{personID}")
+    @PutMapping("/people")
     @ApiOperation(value = "Update personal details", response = PersonalDetails.class, nickname = "updatePersonalDetails")
     public PersonalDetails updatePerson(@RequestParam(value = "personID", required = true) Integer personID, @Valid @RequestBody PersonalDetails personRequest){
         return personalDetailsRepository.findById(personID).map(person -> {
@@ -49,12 +47,4 @@ public class PersonalDetailsController {
         }).orElseThrow(()-> new NotFoundException("Person is not found with provided ID " + personID));
     }
 
-    @DeleteMapping("people")
-    @ApiOperation(value = "Delete personal details", nickname = "deletePersonalDetails")
-    public ResponseEntity<?> deletePerson(@RequestParam(value = "personID", required = true) Integer personID){
-        return personalDetailsRepository.findById(personID).map(person -> {
-            personalDetailsRepository.delete(person);
-            return ResponseEntity.ok().build();
-        }).orElseThrow(() -> new NotFoundException("Person is not found with provided ID " + personID));
-    }
 }

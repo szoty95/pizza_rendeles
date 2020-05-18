@@ -98,7 +98,7 @@ export class BoxedPizzaService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.post<BoxedPizza>(`${this.basePath}/api/boxedPizza/pizzas/${encodeURIComponent(String(pizzaID))}/boxedpizzas`,
+        return this.httpClient.post<BoxedPizza>(`${this.basePath}/api/boxedPizza/boxedpizzas`,
             body,
             {
                 params: queryParameters,
@@ -114,29 +114,16 @@ export class BoxedPizzaService {
      * Delete boxed pizza
      * 
      * @param pizzaID 
-     * @param boxID 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteBoxedPizza(pizzaID: number, boxID: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public deleteBoxedPizza(pizzaID: number, boxID: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public deleteBoxedPizza(pizzaID: number, boxID: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public deleteBoxedPizza(pizzaID: number, boxID: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public deleteBoxedPizza(pizzaID: number, observe?: 'body', reportProgress?: boolean): Observable<number>;
+    public deleteBoxedPizza(pizzaID: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<number>>;
+    public deleteBoxedPizza(pizzaID: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<number>>;
+    public deleteBoxedPizza(pizzaID: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (pizzaID === null || pizzaID === undefined) {
             throw new Error('Required parameter pizzaID was null or undefined when calling deleteBoxedPizza.');
-        }
-
-        if (boxID === null || boxID === undefined) {
-            throw new Error('Required parameter boxID was null or undefined when calling deleteBoxedPizza.');
-        }
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (pizzaID !== undefined && pizzaID !== null) {
-            queryParameters = queryParameters.set('pizzaID', <any>pizzaID);
-        }
-        if (boxID !== undefined && boxID !== null) {
-            queryParameters = queryParameters.set('boxID', <any>boxID);
         }
 
         let headers = this.defaultHeaders;
@@ -153,9 +140,8 @@ export class BoxedPizzaService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.delete<any>(`${this.basePath}/api/boxedPizza/pizzas/${encodeURIComponent(String(pizzaID))}/boxedpizzas`,
+        return this.httpClient.delete<number>(`${this.basePath}/api/boxedPizza/boxedpizzas/${encodeURIComponent(String(pizzaID))}`,
             {
-                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -167,23 +153,13 @@ export class BoxedPizzaService {
     /**
      * Get boxed pizzas
      * 
-     * @param pizzaID 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getBoxedPizzas(pizzaID: number, observe?: 'body', reportProgress?: boolean): Observable<BoxedPizzaWrapper>;
-    public getBoxedPizzas(pizzaID: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BoxedPizzaWrapper>>;
-    public getBoxedPizzas(pizzaID: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BoxedPizzaWrapper>>;
-    public getBoxedPizzas(pizzaID: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (pizzaID === null || pizzaID === undefined) {
-            throw new Error('Required parameter pizzaID was null or undefined when calling getBoxedPizzas.');
-        }
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (pizzaID !== undefined && pizzaID !== null) {
-            queryParameters = queryParameters.set('pizzaID', <any>pizzaID);
-        }
+    public getBoxedPizzas(observe?: 'body', reportProgress?: boolean): Observable<BoxedPizzaWrapper>;
+    public getBoxedPizzas(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BoxedPizzaWrapper>>;
+    public getBoxedPizzas(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BoxedPizzaWrapper>>;
+    public getBoxedPizzas(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -199,9 +175,8 @@ export class BoxedPizzaService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<BoxedPizzaWrapper>(`${this.basePath}/api/boxedPizza/pizzas/${encodeURIComponent(String(pizzaID))}/boxedpizzas`,
+        return this.httpClient.get<BoxedPizzaWrapper>(`${this.basePath}/api/boxedPizza/boxedpizzas`,
             {
-                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -259,7 +234,7 @@ export class BoxedPizzaService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.put<BoxedPizza>(`${this.basePath}/api/boxedPizza/pizzas/${encodeURIComponent(String(pizzaID))}/boxedpizzas/${encodeURIComponent(String(boxID))}`,
+        return this.httpClient.put<BoxedPizza>(`${this.basePath}/api/boxedPizza/boxedpizzas`,
             body,
             {
                 params: queryParameters,

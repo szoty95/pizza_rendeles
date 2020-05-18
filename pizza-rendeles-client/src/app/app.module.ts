@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import {RouterModule} from '@angular/router';
-import {BASE_PATH, PizzaService} from '../swagger';
+import {BASE_PATH, BoxedPizzaService, OrderService, PizzaService} from '../swagger';
 import {DEV_SERVER_PATH} from './shared/variables/variables';
 import {AppRoutingModule} from './app-routing.module';
 import {HttpClientModule} from '@angular/common/http';
@@ -21,7 +21,9 @@ import {HttpClientModule} from '@angular/common/http';
     ],
   providers: [
     {provide: BASE_PATH, useValue: DEV_SERVER_PATH},
-    PizzaService
+    PizzaService,
+    BoxedPizzaService,
+    OrderService
   ],
   bootstrap: [AppComponent]
 })
