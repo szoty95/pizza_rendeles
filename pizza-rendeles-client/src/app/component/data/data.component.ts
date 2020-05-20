@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {NavigationEnd, Router} from '@angular/router';
-import {BoxedPizza, BoxedPizzaService, Pizza, PizzaService} from '../../../swagger';
+import {Router} from '@angular/router';
+import {Basket, BasketService, BoxedPizza, BoxedPizzaService, Pizza, PizzaService} from '../../../swagger';
+import {AppComponent} from '../../app.component';
 
 @Component({
   selector: 'app-component-data',
@@ -12,7 +13,8 @@ export class DataComponent implements OnInit {
   // elemek
   pizzaTypes: Pizza[] = [];
   public boxedPizza: BoxedPizza;
-  mySubscription: any;
+  public basket: Basket;
+  sumPrice = 0;
 
   // Láthatósági segédváltozók
   visibleList = false;
@@ -20,6 +22,7 @@ export class DataComponent implements OnInit {
 
   // Dobozok és paramétereik
   boxes: BoxedPizza[] = [];
+  baskets: Basket[] = [];
 
   // Nevek és feltétek
   pizzas: string[] = [];
@@ -77,7 +80,7 @@ export class DataComponent implements OnInit {
   smallprice = 800;
   bigprice = 1300;
 
-  constructor(public router: Router, private pizzaService: PizzaService, private boxedPizzaService: BoxedPizzaService) {
+  constructor(public router: Router, private pizzaService: PizzaService, private boxedPizzaService: BoxedPizzaService, private basketService: BasketService) {
 
     pizzaService.getPizzaTypes().subscribe(resp => resp.pizzas.forEach(pizza => {
       this.pizzas.push(pizza.pizzaName);
@@ -141,8 +144,16 @@ export class DataComponent implements OnInit {
 
     boxedPizzaService.getBoxedPizzas().subscribe(resp => {
       this.boxes = resp.boxedPizzas;
-
     });
+
+
+    basketService.getBaskets().subscribe(resp => {
+      this.baskets = resp.baskets;
+      resp.baskets.forEach(basket => {
+        this.sumPrice += basket.price;
+      });
+    });
+
 
   }
 
@@ -337,9 +348,17 @@ export class DataComponent implements OnInit {
   }
 
   //kosár elem törlés
-  deleteItem(box: BoxedPizza) {
+  deleteItem(basket: Basket) {
+    this.basketService.getBaskets().subscribe(resp => resp.baskets.forEach(b => {
+      if (basket.pizzaID === b.pizzaID) {
+        this.basketService.deleteBasket(b.pizzaID).subscribe(rez =>
+          this.baskets = this.baskets.filter(c => c.pizzaID !== rez));
+        this.sumPrice -= basket.price;
+      }
+    }));
+
     this.boxedPizzaService.getBoxedPizzas().subscribe(resp => resp.boxedPizzas.forEach(b => {
-      if (box.pizzaID === b.pizzaID) {
+      if ((basket.pizzaID + 69) === b.pizzaID) {
         this.boxedPizzaService.deleteBoxedPizza(b.pizzaID).subscribe(rez =>
           this.boxes = this.boxes.filter(c => c.pizzaID !== rez));
       }
@@ -348,9 +367,16 @@ export class DataComponent implements OnInit {
 
   // kosár törlése
   deleteBasket() {
-    this.boxedPizzaService.getBoxedPizzas().subscribe(resp => resp.boxedPizzas.forEach(box => {
-        this.boxedPizzaService.deleteBoxedPizza(box.pizzaID).subscribe(resp => {
-          this.boxes = [];
+    this.basketService.getBaskets().subscribe(resp => resp.baskets.forEach(basket => {
+        this.basketService.deleteBasket(basket.pizzaID).subscribe(b => {
+          this.baskets = [];
+          this.sumPrice = 0;
+          this.boxedPizzaService.getBoxedPizzas().subscribe(c => c.boxedPizzas.forEach(box => {
+              this.boxedPizzaService.deleteBoxedPizza(basket.pizzaID + 69).subscribe(a => {
+                this.boxes = [];
+              });
+            }
+          ));
         });
       }
     ));
@@ -815,7 +841,7 @@ export class DataComponent implements OnInit {
   // dobozolt pizzák kosárba tétele
   submitBoxes(pizza: string) {
     let input = document.getElementById(pizza.concat('input'));
-
+    AppComponent.orderstarted = true;
     // sonkás = 1
     if (pizza === 'Sonkás') {
 
@@ -831,13 +857,31 @@ export class DataComponent implements OnInit {
                 size: this.sonkasBigDiameter,
                 thick: this.sonkasThickness
               };
+              this.basket = {
+                pizzaID: null,
+                price: this.bigprice,
+                pizza: item,
+                size: this.sonkasBigDiameter,
+                thick: this.sonkasThickness
+              };
 
               this.boxedPizzaService.addBoxedPizza(1, this.boxedPizza).subscribe(rez => {
                 this.boxes.push(rez);
               });
+              this.sumPrice += this.boxedPizza.price;
+              this.basketService.addBasket(1, this.basket).subscribe(rez => {
+                this.baskets.push(rez);
+              });
 
             } else {
               this.boxedPizza = {
+                pizzaID: null,
+                price: this.smallprice,
+                pizza: item,
+                size: this.sonkasBigDiameter,
+                thick: this.sonkasThickness
+              };
+              this.basket = {
                 pizzaID: null,
                 price: this.smallprice,
                 pizza: item,
@@ -849,6 +893,10 @@ export class DataComponent implements OnInit {
                   this.boxes.push(rez);
                 }
               );
+              this.sumPrice += this.boxedPizza.price;
+              this.basketService.addBasket(1, this.basket).subscribe(rez => {
+                this.baskets.push(rez);
+              });
             }
 
 
@@ -872,9 +920,20 @@ export class DataComponent implements OnInit {
                 size: this.songokuBigDiameter,
                 thick: this.songokuThickness
               };
+              this.basket = {
+                pizzaID: null,
+                price: this.bigprice,
+                pizza: item,
+                size: this.songokuBigDiameter,
+                thick: this.songokuThickness
+              };
 
               this.boxedPizzaService.addBoxedPizza(2, this.boxedPizza).subscribe(rez => {
                 this.boxes.push(rez);
+              });
+              this.sumPrice += this.boxedPizza.price;
+              this.basketService.addBasket(2, this.basket).subscribe(rez => {
+                this.baskets.push(rez);
               });
 
             } else {
@@ -885,9 +944,20 @@ export class DataComponent implements OnInit {
                 size: this.songokuBigDiameter,
                 thick: this.songokuThickness
               };
+              this.basket = {
+                pizzaID: null,
+                price: this.smallprice,
+                pizza: item,
+                size: this.songokuBigDiameter,
+                thick: this.songokuThickness
+              };
 
               this.boxedPizzaService.addBoxedPizza(2, this.boxedPizza).subscribe(rez => {
                 this.boxes.push(rez);
+              });
+              this.sumPrice += this.boxedPizza.price;
+              this.basketService.addBasket(2, this.basket).subscribe(rez => {
+                this.baskets.push(rez);
               });
             }
 
@@ -912,9 +982,20 @@ export class DataComponent implements OnInit {
                 size: this.hawaiiBigDiameter,
                 thick: this.hawaiiThickness
               };
+              this.basket = {
+                pizzaID: null,
+                price: this.bigprice,
+                pizza: item,
+                size: this.hawaiiBigDiameter,
+                thick: this.hawaiiThickness
+              };
 
               this.boxedPizzaService.addBoxedPizza(3, this.boxedPizza).subscribe(rez => {
                 this.boxes.push(rez);
+              });
+              this.sumPrice += this.boxedPizza.price;
+              this.basketService.addBasket(3, this.basket).subscribe(rez => {
+                this.baskets.push(rez);
               });
 
             } else {
@@ -925,9 +1006,20 @@ export class DataComponent implements OnInit {
                 size: this.hawaiiBigDiameter,
                 thick: this.hawaiiThickness
               };
+              this.basket = {
+                pizzaID: null,
+                price: this.smallprice,
+                pizza: item,
+                size: this.hawaiiBigDiameter,
+                thick: this.hawaiiThickness
+              };
 
               this.boxedPizzaService.addBoxedPizza(3, this.boxedPizza).subscribe(rez => {
                 this.boxes.push(rez);
+              });
+              this.sumPrice += this.boxedPizza.price;
+              this.basketService.addBasket(3, this.basket).subscribe(rez => {
+                this.baskets.push(rez);
               });
             }
 
@@ -952,9 +1044,20 @@ export class DataComponent implements OnInit {
                 size: this.szalamisBigDiameter,
                 thick: this.szalamisThickness
               };
+              this.basket = {
+                pizzaID: null,
+                price: this.bigprice,
+                pizza: item,
+                size: this.szalamisBigDiameter,
+                thick: this.szalamisThickness
+              };
 
               this.boxedPizzaService.addBoxedPizza(4, this.boxedPizza).subscribe(rez => {
                 this.boxes.push(rez);
+              });
+              this.sumPrice += this.boxedPizza.price;
+              this.basketService.addBasket(4, this.basket).subscribe(rez => {
+                this.baskets.push(rez);
               });
 
             } else {
@@ -965,9 +1068,20 @@ export class DataComponent implements OnInit {
                 size: this.szalamisBigDiameter,
                 thick: this.szalamisThickness
               };
+              this.basket = {
+                pizzaID: null,
+                price: this.smallprice,
+                pizza: item,
+                size: this.szalamisBigDiameter,
+                thick: this.szalamisThickness
+              };
 
               this.boxedPizzaService.addBoxedPizza(4, this.boxedPizza).subscribe(rez => {
                 this.boxes.push(rez);
+              });
+              this.sumPrice += this.boxedPizza.price;
+              this.basketService.addBasket(4, this.basket).subscribe(rez => {
+                this.baskets.push(rez);
               });
             }
 
@@ -992,9 +1106,20 @@ export class DataComponent implements OnInit {
                 size: this.magyarosBigDiameter,
                 thick: this.magyarosThickness
               };
+              this.basket = {
+                pizzaID: null,
+                price: this.bigprice,
+                pizza: item,
+                size: this.magyarosBigDiameter,
+                thick: this.magyarosThickness
+              };
 
               this.boxedPizzaService.addBoxedPizza(5, this.boxedPizza).subscribe(rez => {
                 this.boxes.push(rez);
+              });
+              this.sumPrice += this.boxedPizza.price;
+              this.basketService.addBasket(5, this.basket).subscribe(rez => {
+                this.baskets.push(rez);
               });
 
             } else {
@@ -1005,9 +1130,20 @@ export class DataComponent implements OnInit {
                 size: this.magyarosBigDiameter,
                 thick: this.magyarosThickness
               };
+              this.basket = {
+                pizzaID: null,
+                price: this.smallprice,
+                pizza: item,
+                size: this.magyarosBigDiameter,
+                thick: this.magyarosThickness
+              };
 
               this.boxedPizzaService.addBoxedPizza(5, this.boxedPizza).subscribe(rez => {
                 this.boxes.push(rez);
+              });
+              this.sumPrice += this.boxedPizza.price;
+              this.basketService.addBasket(5, this.basket).subscribe(rez => {
+                this.baskets.push(rez);
               });
             }
 
@@ -1032,9 +1168,20 @@ export class DataComponent implements OnInit {
                 size: this.jokerBigDiameter,
                 thick: this.jokerThickness
               };
+              this.basket = {
+                pizzaID: null,
+                price: this.bigprice,
+                pizza: item,
+                size: this.jokerBigDiameter,
+                thick: this.jokerThickness
+              };
 
               this.boxedPizzaService.addBoxedPizza(6, this.boxedPizza).subscribe(rez => {
                 this.boxes.push(rez);
+              });
+              this.sumPrice += this.boxedPizza.price;
+              this.basketService.addBasket(6, this.basket).subscribe(rez => {
+                this.baskets.push(rez);
               });
 
             } else {
@@ -1045,9 +1192,20 @@ export class DataComponent implements OnInit {
                 size: this.jokerBigDiameter,
                 thick: this.jokerThickness
               };
+              this.basket = {
+                pizzaID: null,
+                price: this.smallprice,
+                pizza: item,
+                size: this.jokerBigDiameter,
+                thick: this.jokerThickness
+              };
 
               this.boxedPizzaService.addBoxedPizza(6, this.boxedPizza).subscribe(rez => {
                 this.boxes.push(rez);
+              });
+              this.sumPrice += this.boxedPizza.price;
+              this.basketService.addBasket(6, this.basket).subscribe(rez => {
+                this.baskets.push(rez);
               });
             }
 
@@ -1072,9 +1230,20 @@ export class DataComponent implements OnInit {
                 size: this.kuszaBigDiameter,
                 thick: this.kuszaThickness
               };
+              this.basket = {
+                pizzaID: null,
+                price: this.bigprice,
+                pizza: item,
+                size: this.kuszaBigDiameter,
+                thick: this.kuszaThickness
+              };
 
               this.boxedPizzaService.addBoxedPizza(7, this.boxedPizza).subscribe(rez => {
                 this.boxes.push(rez);
+              });
+              this.sumPrice += this.boxedPizza.price;
+              this.basketService.addBasket(7, this.basket).subscribe(rez => {
+                this.baskets.push(rez);
               });
 
             } else {
@@ -1085,9 +1254,20 @@ export class DataComponent implements OnInit {
                 size: this.kuszaBigDiameter,
                 thick: this.kuszaThickness
               };
+              this.basket = {
+                pizzaID: null,
+                price: this.smallprice,
+                pizza: item,
+                size: this.kuszaBigDiameter,
+                thick: this.kuszaThickness
+              };
 
               this.boxedPizzaService.addBoxedPizza(7, this.boxedPizza).subscribe(rez => {
                 this.boxes.push(rez);
+              });
+              this.sumPrice += this.boxedPizza.price;
+              this.basketService.addBasket(7, this.basket).subscribe(rez => {
+                this.baskets.push(rez);
               });
             }
 
@@ -1112,9 +1292,20 @@ export class DataComponent implements OnInit {
                 size: this.ordogBigDiameter,
                 thick: this.ordogThickness
               };
+              this.basket = {
+                pizzaID: null,
+                price: this.bigprice,
+                pizza: item,
+                size: this.ordogBigDiameter,
+                thick: this.ordogThickness
+              };
 
               this.boxedPizzaService.addBoxedPizza(8, this.boxedPizza).subscribe(rez => {
                 this.boxes.push(rez);
+              });
+              this.sumPrice += this.boxedPizza.price;
+              this.basketService.addBasket(8, this.basket).subscribe(rez => {
+                this.baskets.push(rez);
               });
 
             } else {
@@ -1125,9 +1316,20 @@ export class DataComponent implements OnInit {
                 size: this.ordogBigDiameter,
                 thick: this.ordogThickness
               };
+              this.basket = {
+                pizzaID: null,
+                price: this.smallprice,
+                pizza: item,
+                size: this.ordogBigDiameter,
+                thick: this.ordogThickness
+              };
 
               this.boxedPizzaService.addBoxedPizza(8, this.boxedPizza).subscribe(rez => {
                 this.boxes.push(rez);
+              });
+              this.sumPrice += this.boxedPizza.price;
+              this.basketService.addBasket(8, this.basket).subscribe(rez => {
+                this.baskets.push(rez);
               });
             }
 
@@ -1152,9 +1354,20 @@ export class DataComponent implements OnInit {
                 size: this.mcstarBigDiameter,
                 thick: this.mcstarThickness
               };
+              this.basket = {
+                pizzaID: null,
+                price: this.bigprice,
+                pizza: item,
+                size: this.mcstarBigDiameter,
+                thick: this.mcstarThickness
+              };
 
               this.boxedPizzaService.addBoxedPizza(9, this.boxedPizza).subscribe(rez => {
                 this.boxes.push(rez);
+              });
+              this.sumPrice += this.boxedPizza.price;
+              this.basketService.addBasket(9, this.basket).subscribe(rez => {
+                this.baskets.push(rez);
               });
 
             } else {
@@ -1165,9 +1378,20 @@ export class DataComponent implements OnInit {
                 size: this.mcstarBigDiameter,
                 thick: this.mcstarThickness
               };
+              this.basket = {
+                pizzaID: null,
+                price: this.smallprice,
+                pizza: item,
+                size: this.mcstarBigDiameter,
+                thick: this.mcstarThickness
+              };
 
               this.boxedPizzaService.addBoxedPizza(9, this.boxedPizza).subscribe(rez => {
                 this.boxes.push(rez);
+              });
+              this.sumPrice += this.boxedPizza.price;
+              this.basketService.addBasket(9, this.basket).subscribe(rez => {
+                this.baskets.push(rez);
               });
             }
 
@@ -1192,9 +1416,20 @@ export class DataComponent implements OnInit {
                 size: this.abBigDiameter,
                 thick: this.abThickness
               };
+              this.basket = {
+                pizzaID: null,
+                price: this.bigprice,
+                pizza: item,
+                size: this.abBigDiameter,
+                thick: this.abThickness
+              };
 
               this.boxedPizzaService.addBoxedPizza(10, this.boxedPizza).subscribe(rez => {
                 this.boxes.push(rez);
+              });
+              this.sumPrice += this.boxedPizza.price;
+              this.basketService.addBasket(10, this.basket).subscribe(rez => {
+                this.baskets.push(rez);
               });
 
             } else {
@@ -1205,9 +1440,20 @@ export class DataComponent implements OnInit {
                 size: this.abBigDiameter,
                 thick: this.abThickness
               };
+              this.basket = {
+                pizzaID: null,
+                price: this.smallprice,
+                pizza: item,
+                size: this.abBigDiameter,
+                thick: this.abThickness
+              };
 
               this.boxedPizzaService.addBoxedPizza(10, this.boxedPizza).subscribe(rez => {
                 this.boxes.push(rez);
+              });
+              this.sumPrice += this.boxedPizza.price;
+              this.basketService.addBasket(10, this.basket).subscribe(rez => {
+                this.baskets.push(rez);
               });
             }
 
@@ -1232,9 +1478,20 @@ export class DataComponent implements OnInit {
                 size: this.yoloBigDiameter,
                 thick: this.yoloThickness
               };
+              this.basket = {
+                pizzaID: null,
+                price: this.bigprice,
+                pizza: item,
+                size: this.yoloBigDiameter,
+                thick: this.yoloThickness
+              };
 
               this.boxedPizzaService.addBoxedPizza(11, this.boxedPizza).subscribe(rez => {
                 this.boxes.push(rez);
+              });
+              this.sumPrice += this.boxedPizza.price;
+              this.basketService.addBasket(11, this.basket).subscribe(rez => {
+                this.baskets.push(rez);
               });
 
             } else {
@@ -1245,9 +1502,20 @@ export class DataComponent implements OnInit {
                 size: this.yoloBigDiameter,
                 thick: this.yoloThickness
               };
+              this.basket = {
+                pizzaID: null,
+                price: this.smallprice,
+                pizza: item,
+                size: this.yoloBigDiameter,
+                thick: this.yoloThickness
+              };
 
               this.boxedPizzaService.addBoxedPizza(11, this.boxedPizza).subscribe(rez => {
                 this.boxes.push(rez);
+              });
+              this.sumPrice += this.boxedPizza.price;
+              this.basketService.addBasket(11, this.basket).subscribe(rez => {
+                this.baskets.push(rez);
               });
             }
 
@@ -1266,6 +1534,9 @@ export class DataComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (!AppComponent.orderstarted) {
+      this.deleteBasket();
+    }
   }
 
 

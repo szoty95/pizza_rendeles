@@ -1,0 +1,97 @@
+@import "../data/mixins";
+@import "../data/colors";
+
+.app-body {
+  max-width: 1264px;
+  margin: 20px auto 0;
+  padding: 20px;
+  text-align: center;
+  background: cornsilk;
+  border: 2px solid #8b4513;
+  @include border-radius(5px);
+  overflow: auto;
+
+  h1 {
+    margin-bottom: 40px;
+    font-size: 30px;
+    font-weight: bold;
+    color: $textColor;
+  }
+
+  .text-wrapper {
+    border: 2px solid #778899;
+    @include border-radius(4px);
+    background-image: radial-gradient(circle 827px at 47.3% 48%, rgba(255, 255, 255, 1) 0%, rgba(138, 192, 216, 1) 90%);
+    width: 50%;
+    margin: 0 auto;
+
+    p {
+      font-size: 18px;
+      color: $textColor;
+      font-weight: bold;
+
+      &.sum {
+        margin-top: 0;
+        padding-top: 20px;
+        border-top: 1px solid $borderColor;
+        color: $errorColor;
+        font-weight: bold;
+
+      }
+    }
+
+    .heading {
+      margin-bottom: 0;
+      margin-top: 0px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid slategray;
+      font-weight: bold;
+      background: darkslategray;
+      color: #fff;
+    }
+
+    .last-p {
+      padding-bottom: 10px;
+      border-bottom: 1px solid slategray;
+      margin-bottom: 0;
+    }
+
+    .pizza-wrap {
+      display: block;
+
+      p {
+        display: inline-block;
+        margin-left: 5px;
+      }
+    }
+  }
+
+  h2 {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    color: $textColor;
+  }
+
+  button {
+    border: 0;
+    padding: 16px;
+    font-size: 22px;
+    @include border-radius(4px);
+    @include transition(background .5s);
+    color: #fff;
+    font-weight: bold;
+    background: darkslategray;
+    cursor: pointer;
+
+    &:focus {
+      outline: 0;
+    }
+
+    &:hover {
+      @include transition(background .5s);
+      background: $successColor;
+    }
+
+  }
+}

@@ -8,18 +8,19 @@
     <i class="fas fa-shopping-basket"></i>
     <ng-container>
       <ul>
-        <li class="item-holder" *ngFor="let box of boxes">{{box?.pizza?.pizzaName}}
-          <p *ngIf="box.size">50cm</p>
-          <p *ngIf="!box.size">32cm</p>
-          <p *ngIf="box.thick">vastag</p>
-          <p *ngIf="!box.thick">vékony</p>
-          <button class="delete-button" (click)="deleteItem(box)">Elem törlése</button>
+        <li class="item-holder" *ngFor="let basket of baskets">{{basket?.pizza?.pizzaName}}
+          <p *ngIf="basket.size">50cm</p>
+          <p *ngIf="!basket.size">32cm</p>
+          <p *ngIf="basket.thick">vastag</p>
+          <p *ngIf="!basket.thick">vékony</p>
+          <button class="delete-button" (click)="deleteItem(basket)">Elem törlése</button>
         </li>
       </ul>
-      <button class="clear-basket-button"(click)="deleteBasket()">Kosár kiürítése</button>
-      <button class="redirect-button" (click)="navigateToSecond()">
-        Rendelés leadása
-      </button>
+      <div>
+        <button class="clear-basket-button" (click)="deleteBasket()">Kosár kiürítése</button>
+        <button class="redirect-button" (click)="navigateToSecond()">Rendelés leadása</button>
+      </div>
+      <div class="basket-price">A kosár értéke: {{sumPrice}} Ft</div>
     </ng-container>
   </div>
 </div>

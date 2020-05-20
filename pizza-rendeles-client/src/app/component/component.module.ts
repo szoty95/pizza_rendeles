@@ -1,11 +1,20 @@
-import {BoxedPizzaService, OrderService, PersonalDetailsService, PizzaService, SauceService, ToppingService} from '../../swagger';
+import {
+  BasketService,
+  BoxedPizzaService,
+  OrderService,
+  PersonalDetailsService,
+  PizzaService,
+  SauceService,
+  ToppingService
+} from '../../swagger';
 import {HttpClientModule} from '@angular/common/http';
 import {Component, NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {CommonModule, DatePipe} from '@angular/common';
 import {DataComponent} from './data/data.component';
 import {ThanksComponent} from './thanks/thanks.component';
 import {ComponentRoutingModule} from './component-routing.module';
 import {OrderComponent} from './order/order.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   providers: [
@@ -14,7 +23,9 @@ import {OrderComponent} from './order/order.component';
     OrderService,
     PersonalDetailsService,
     SauceService,
-    ToppingService
+    ToppingService,
+    BasketService,
+    DatePipe
   ],
   declarations: [
     DataComponent,
@@ -24,7 +35,9 @@ import {OrderComponent} from './order/order.component';
   imports: [
     CommonModule,
     ComponentRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class ComponentModule { }

@@ -156,6 +156,17 @@
   -moz-transition: background 0.5s;
   border-color: #f53505;
 }
+.app-header .basket .basket-price {
+  margin: 0 10px 10px;
+  font-size: 18px;
+  color: brown;
+  cursor: pointer;
+}
+.app-header .basket .basket-price:hover {
+  color: #f53505;
+  font-weight: bold;
+  text-decoration: underline;
+}
 
 .app-body {
   max-width: 1264px;

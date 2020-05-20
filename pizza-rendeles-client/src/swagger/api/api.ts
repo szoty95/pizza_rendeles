@@ -1,3 +1,5 @@
+export * from './basket.service';
+import { BasketService } from './basket.service';
 export * from './boxedPizza.service';
 import { BoxedPizzaService } from './boxedPizza.service';
 export * from './order.service';
@@ -10,4 +12,4 @@ export * from './sauce.service';
 import { SauceService } from './sauce.service';
 export * from './topping.service';
 import { ToppingService } from './topping.service';
-export const APIS = [BoxedPizzaService, OrderService, PersonalDetailsService, PizzaService, SauceService, ToppingService];
+export const APIS = [BasketService, BoxedPizzaService, OrderService, PersonalDetailsService, PizzaService, SauceService, ToppingService];

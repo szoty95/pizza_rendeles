@@ -20,6 +20,7 @@
       }
 
       ul {
+        display: block;
         padding: 0;
         width: 50%;
         margin: 0 auto 40px;
@@ -27,6 +28,46 @@
         @include border-radius(4px);
         background-image: radial-gradient(circle 827px at 47.3% 48%, rgba(255, 255, 255, 1) 0%, rgba(138, 192, 216, 1) 90%);
 
+        &.person{
+          width: 30%;
+          margin-top: -20px;
+
+          button{
+            margin: 10px;
+            padding: 8px;
+            color: $errorColor;
+            font-weight: bold;
+            background: #fff;
+            border: 1px solid $errorColor;
+            @include border-radius(4px);
+            @include transition(background .5s);
+            cursor: pointer;
+
+            &.disabled{
+              background: lightgray;
+              border-color: lightgray;
+              color: darkgrey;
+              cursor: not-allowed;
+
+              &:hover{
+                background: lightgray;
+                border-color: lightgray;
+                color: darkgrey;
+              }
+            }
+
+            &:hover{
+              @include transition(background .5s);
+              color: #fff;
+              background: $errorColor;
+            }
+
+            &:focus{
+              outline: 0;
+            }
+
+          }
+        }
 
         .box-item {
           list-style: none;
@@ -91,10 +132,7 @@
 
       }
     }
-
-    .form-container {
-      text-align: center;
-
+    form{
       .name-selector {
         width: 171px;
         height: 24px;
@@ -108,40 +146,113 @@
         }
 
       }
-
-      input{
-        display: block;
-        margin: 15px auto;
-        height: 20px;
-        line-height: 20px;
-        &:focus{
-          outline: 0;
+      &.selector-container{
+        >div{
+          &:last-child{
+            margin-bottom: 0;
+          }
         }
+      }
+
+      >div{
+        display: block;
 
         &:last-child{
           margin-bottom: 40px;
         }
+
+        input{
+          display: inline-block;
+          margin: 15px auto;
+          height: 20px;
+          line-height: 20px;
+          font-size: 14px;
+          border: 1px solid slategray;
+          padding-left: 3px;
+          @include border-radius(4px);
+
+          &:focus{
+            outline: 0;
+          }
+        }
+
+        .error-message{
+          color: $errorColor;
+          margin: -10px 10px 10px;
+        }
+
+        .prefix{
+          display: inline-block;
+          height: 22px;
+          line-height: 24px;
+          font-size: 14px;
+          border: 1px solid slategray;
+          border-right: 0;
+          padding-left: 3px;
+          padding-right: 3px;
+          background: lightgray;
+          font-weight: bold;
+          @include border-top-right-radius(0);
+          @include border-bottom-right-radius(0);
+          @include border-bottom-left-radius(4px);
+          @include border-top-left-radius(4px);
+
+        }
+
       }
 
-      .address-shower {
+      .phone-number-container{
+        input{
+          @include border-top-left-radius(0);
+          @include border-bottom-left-radius(0);
+        }
+
+
       }
 
-      .phone-shower {
-      }
+      .submit-holder{
 
-      .email-shower {
-      }
+        button{
+          padding: 8px;
+          margin: 10px;
+          @include border-radius(4px);
+          @include transition(background .5s);
+          @include transition(border .5s);
+          cursor: pointer;
+          border: 0;
+          font-weight: bold;
 
-      .name-input {
-      }
+          &:focus {
+            outline: 0;
+          }
+        }
 
-      .address-input {
-      }
+        .submit{
+          background: limegreen;
+          color: #fff;
+          border: 1px solid limegreen;
 
-      .phone-input {
-      }
+          &:hover{
+            background: $hoverColor;
+            border-color: $hoverColor;
+            @include transition(background .5s);
+            @include transition(border .5s);
+          }
+        }
 
-      .email-input {
+        .reset{
+          color: $errorColor;
+          background: #fff;
+          border: 1px solid $errorColor;
+
+          &:hover{
+            background: $errorColor;
+            border-color: $errorColor;
+            color: #fff;
+            @include transition(background .5s);
+            @include transition(border .5s);
+          }
+        }
       }
     }
 

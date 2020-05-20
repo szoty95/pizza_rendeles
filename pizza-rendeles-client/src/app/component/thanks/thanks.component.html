@@ -1,0 +1,26 @@
+<div class="app-body">
+  <h1>Köszönjük, hogy nálunk rendeltél!</h1>
+  <div class="text-wrapper">
+    <p class="heading" >Megrendelő adatai:</p>
+    <p>Megrendelő neve: {{order?.personalDetails?.personalName}}</p>
+    <p>Megrendelő címe: {{order?.personalDetails?.address}}</p>
+    <p>Megrendelő telefonszáma: +36{{order?.personalDetails?.phoneNumber}}</p>
+    <p>Megrendelő email-címe: {{order?.personalDetails?.emailAddress}}</p>
+    <p class="last-p">Megrendelés ideje: {{order?.orderDate}}</p>
+    <div>
+      <p class="heading" >Megrendelt elemek:</p>
+      <div class="pizza-wrap" *ngFor="let basket of baskets">
+        <p>{{basket?.pizza?.pizzaName}}</p>
+        <p *ngIf="basket?.size">50cm</p>
+        <p *ngIf="!basket?.size">32cm</p>
+        <p *ngIf="basket?.thick">vastag tészta </p>
+        <p *ngIf="!basket?.thick">vékony tészta </p>
+        <p>{{basket?.price}} Ft</p>
+      </div>
+    </div>
+    <p class="sum">Végösszeg: {{order?.orderPrice}} Ft</p>
+  </div>
+  <h2>Rendelésed várhatóan 60 perc múlva érkezik hozzád!</h2>
+  <h2>Ha kifelejtettél valamit, akkor a gombra kattintva nyithatsz új rendelést! :)</h2>
+  <button class="main-page-button" (click)="backToMain()">Vissza a főoldalra!</button>
+</div>

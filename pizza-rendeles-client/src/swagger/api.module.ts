@@ -3,6 +3,7 @@ import { Configuration } from './configuration';
 import { HttpClient } from '@angular/common/http';
 
 
+import { BasketService } from './api/basket.service';
 import { BoxedPizzaService } from './api/boxedPizza.service';
 import { OrderService } from './api/order.service';
 import { PersonalDetailsService } from './api/personalDetails.service';
@@ -15,6 +16,7 @@ import { ToppingService } from './api/topping.service';
   declarations: [],
   exports:      [],
   providers: [
+    BasketService,
     BoxedPizzaService,
     OrderService,
     PersonalDetailsService,

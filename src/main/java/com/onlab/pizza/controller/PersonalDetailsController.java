@@ -3,6 +3,7 @@ package com.onlab.pizza.controller;
 import com.onlab.pizza.exception.NotFoundException;
 import com.onlab.pizza.model.PersonalDetails;
 import com.onlab.pizza.repository.PersonalDetailsRepository;
+import com.onlab.pizza.wrapper.BoxedPizzaWrapper;
 import com.onlab.pizza.wrapper.PersonalDetailsWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -24,8 +25,10 @@ public class PersonalDetailsController {
 
     @GetMapping("/people")
     @ApiOperation(value = "Get all personal details", response = PersonalDetailsWrapper.class, nickname = "getPersonalDetails")
-    public List<PersonalDetails> getPeople(){
-        return personalDetailsRepository.findAll();
+    public PersonalDetailsWrapper getPersonalDetails(){
+        PersonalDetailsWrapper personalDetailsWrapper = new PersonalDetailsWrapper();
+        personalDetailsWrapper.setPersonalDetails(personalDetailsRepository.findAll());
+        return personalDetailsWrapper;
     }
 
     @PostMapping("/people")

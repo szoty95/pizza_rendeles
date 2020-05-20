@@ -6,6 +6,8 @@
     "title" : "REST API SPEC FOR MIX WEBAPP"
   },
   "tags" : [ {
+    "name" : "Basket"
+  }, {
     "name" : "BoxedPizza"
   }, {
     "name" : "Order"
@@ -19,6 +21,74 @@
     "name" : "Topping"
   } ],
   "paths" : {
+    "/api/basket/baskets" : {
+      "get" : {
+        "tags" : [ "Basket" ],
+        "summary" : "Get baskets",
+        "description" : "",
+        "operationId" : "getBaskets",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/BasketWrapper"
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Basket" ],
+        "summary" : "Add basket",
+        "description" : "",
+        "operationId" : "addBasket",
+        "parameters" : [ {
+          "name" : "pizzaID",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Basket"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Basket"
+            }
+          }
+        }
+      }
+    },
+    "/api/basket/baskets/{pizzaID}" : {
+      "delete" : {
+        "tags" : [ "Basket" ],
+        "summary" : "Delete basket",
+        "description" : "",
+        "operationId" : "deleteBasket",
+        "parameters" : [ {
+          "name" : "pizzaID",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "integer",
+              "format" : "int32"
+            }
+          }
+        }
+      }
+    },
     "/api/boxedPizza/boxedpizzas" : {
       "get" : {
         "tags" : [ "BoxedPizza" ],
@@ -315,6 +385,39 @@
     }
   },
   "definitions" : {
+    "Basket" : {
+      "type" : "object",
+      "properties" : {
+        "pizzaID" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "price" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "pizza" : {
+          "$ref" : "#/definitions/Pizza"
+        },
+        "size" : {
+          "type" : "boolean"
+        },
+        "thick" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "BasketWrapper" : {
+      "type" : "object",
+      "properties" : {
+        "baskets" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Basket"
+          }
+        }
+      }
+    },
     "BoxedPizza" : {
       "type" : "object",
       "properties" : {

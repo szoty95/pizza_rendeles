@@ -144,9 +144,20 @@
         @include transition(background .5s);
         border-color: $errorColor;
       }
-
     }
 
+    .basket-price{
+      margin: 0 10px 10px;
+      font-size: 18px;
+      color: brown;
+      cursor: pointer;
+
+      &:hover{
+        color: $errorColor;
+        font-weight: bold;
+        text-decoration: underline;
+      }
+    }
 
   }
 }

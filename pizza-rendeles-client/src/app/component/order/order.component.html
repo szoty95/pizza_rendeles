@@ -5,15 +5,22 @@
     <div class="box-list">
       <h3>Amit eddig rendelni tervezel:</h3>
       <ul>
-        <li class="box-item" *ngFor="let box of boxes">
-          <p>{{box.pizza.pizzaName}}</p>
-          <p *ngIf="box.size">50cm</p>
-          <p *ngIf="!box.size">32cm</p>
-          <p *ngIf="box.thick">vastag tészta </p>
-          <p *ngIf="!box.thick">vékony tészta </p>
-          <p>{{box.price}} Ft</p>
+        <li class="box-item" *ngFor="let basket of baskets">
+          <p>{{basket.pizza.pizzaName}}</p>
+          <p *ngIf="basket.size">50cm</p>
+          <p *ngIf="!basket.size">32cm</p>
+          <p *ngIf="basket.thick">vastag tészta </p>
+          <p *ngIf="!basket.thick">vékony tészta </p>
+          <p>{{basket.price}} Ft</p>
         </li>
         <p class="summary-p">Fizetendő összeg: {{summary}} Ft</p>
+      </ul>
+      <ul class="person"*ngIf="registered">
+        <p>Név: {{person.personalName}}</p>
+        <p>Cím: {{person.address}}</p>
+        <p>Mobil: +36{{person.phoneNumber}}</p>
+        <p>Email: {{person.emailAddress}}</p>
+        <button id="cancelButton" class="cancel" (click)="changePerson()">Mégse</button>
       </ul>
     </div>
 
@@ -23,21 +30,66 @@
     </div>
 
     <ng-container *ngIf="notStrangerVisible">
-      <div class="form-container">
-        <select id="nameSelector" class="name-selector"></select>
+      <form class="selector-container" [formGroup]="selectForm" (ngSubmit)="onSelect(selectForm)">
+        <select id="nameSelector" class="name-selector" formControlName="selectControl">
+          <option value="" disabled selected>Válaszd ki a neved!</option>
+          <option [ngValue]="person" *ngFor="let person of people" value="{{person}}">{{person.personalName}}</option>
+        </select>
+        <div class="submit-holder">
+          <button class="submit" type="submit">Kiválasztom</button>
+          <button class="reset" type="reset" (click)="resetData()">Reset</button>
+        </div>
+      </form>
+      <form class="form-container" *ngIf="selected">
+        <div>
         <input id="addressShower" class="address-shower" placeholder="Cím.." disabled/>
+        </div>
+        <div class="phone-number-container">
+          <div class="prefix">+36</div>
         <input id="phoneShower" class="phone-shower" placeholder="Telefonszám.." disabled/>
+        </div>
+        <div>
         <input id="emailShower" class="email-shower" placeholder="Email cím.." disabled/>
-      </div>
+        </div>
+        <div class="submit-holder">
+          <button class="submit" type="submit" (click)="registerAgain()">Megerősítem</button>
+        </div>
+
+      </form>
     </ng-container>
 
     <ng-container *ngIf="strangerVisible">
-      <div class="form-container">
-        <input id="nameInput" class="name-input" placeholder="Teljes név" />
-        <input id="addressInput" class="address-input" placeholder="Cím"/>
-        <input id="phoneInput" class="phone-input" placeholder="Telefonszám"/>
-        <input id="emailInput" class="email-input" placeholder="Email cím"/>
-      </div>
+      <form class="form-container" [formGroup]="myForm" (ngSubmit)="register(myForm)">
+        <div>
+        <input id="nameInput" class="name-input" placeholder="Teljes név" type="text" formControlName="name" [ngClass]="{ 'is-invalid': submitted && this.myForm.controls.name.errors}"/>
+          <div *ngIf="submitted && this.myForm.controls.name.errors">
+            <div class="error-message" *ngIf="this.myForm.controls.name.errors?.required">A nevet kötelező megadni!</div>
+          </div>
+        </div>
+        <div>
+        <input id="addressInput" class="address-input" placeholder="Cím" type="text" formControlName="address"[ngClass]="{ 'is-invalid': submitted && this.myForm.controls.address.errors}"/>
+          <div *ngIf="submitted && this.myForm.controls.address.errors">
+            <div class="error-message" *ngIf="this.myForm.controls.address.errors?.required">A címet kötelező megadni!</div>
+          </div>
+        </div>
+        <div class="phone-number-container">
+          <div class="prefix">+36</div>
+        <input id="phoneInput" class="phone-input" placeholder="Mobiltelefon szám" type="text" formControlName="phone"[ngClass]="{ 'is-invalid': submitted && this.myForm.controls.phone.errors}"/>
+          <div *ngIf="submitted && this.myForm.controls.phone.errors">
+            <div class="error-message" *ngIf="this.myForm.controls.phone.errors?.validNumber">Érvényes számot kell megadni! (pl.301112222)</div>
+          </div>
+        </div>
+        <div>
+        <input id="emailInput" class="email-input" placeholder="Email cím" type="text" formControlName="email"[ngClass]="{ 'is-invalid': submitted && this.myForm.controls.email.errors}"/>
+          <div *ngIf="submitted && this.myForm.controls.name.errors">
+            <div class="error-message" *ngIf="this.myForm.controls.email.errors?.validEmail">Megfelelő formátumú emailt kell megadni! (pl.s@sgh.com)</div>
+          </div>
+        </div>
+        <div class="submit-holder">
+          <button type="submit" class="submit">Regisztrálok</button>
+          <button type="reset" class="reset" (click)="resetForm()">Reset</button>
+        </div>
+      </form>
     </ng-container>
     <button id="checkButton" class="check-button disabled" disabled (click)="orderChecked()">Végeztem</button>
   </div>

@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+import {Basket, Order} from '../swagger';
 
 @Component({
   selector: 'app-root',
@@ -7,11 +8,15 @@ import {Router} from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'pizza-rendeles-client';
 
   constructor(public router: Router) {
 
   }
+  static orderstarted = false;
+  static order: Order;
+  static orderId = 0;
+  static baskets: Basket[] = [];
+  title = 'pizza-rendeles-client';
 
   ngOnInit(): void {
   }

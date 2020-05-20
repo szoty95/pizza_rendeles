@@ -3,10 +3,12 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import {RouterModule} from '@angular/router';
-import {BASE_PATH, BoxedPizzaService, OrderService, PizzaService} from '../swagger';
+import {BASE_PATH, BasketService, BoxedPizzaService, OrderService, PizzaService} from '../swagger';
 import {DEV_SERVER_PATH} from './shared/variables/variables';
 import {AppRoutingModule} from './app-routing.module';
 import {HttpClientModule} from '@angular/common/http';
+import {ReactiveFormsModule} from '@angular/forms';
+import {DatePipe} from '@angular/common';
 
 
 @NgModule({
@@ -17,13 +19,16 @@ import {HttpClientModule} from '@angular/common/http';
         BrowserModule,
         RouterModule,
         AppRoutingModule,
-        HttpClientModule
+        HttpClientModule,
+      ReactiveFormsModule
     ],
   providers: [
     {provide: BASE_PATH, useValue: DEV_SERVER_PATH},
     PizzaService,
     BoxedPizzaService,
-    OrderService
+    OrderService,
+    BasketService,
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })
